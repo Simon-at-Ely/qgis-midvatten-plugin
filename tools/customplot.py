@@ -367,7 +367,7 @@ class plotsqlitewindow(QtGui.QMainWindow, customplot_ui_class):
                 df.index.name = u'date_time'
                 df.columns = [u'values']
 
-                df = pandas_calc.calculate(df)
+                df = pandas_calc.calculate(df, self.plabels[i])
                 if df is not None:
                     date_time = [datetime.datetime.strftime(x, u'%Y-%m-%d %H:%M:%S') for x in df.index]
                     values = df[u'values']
@@ -378,8 +378,8 @@ class plotsqlitewindow(QtGui.QMainWindow, customplot_ui_class):
                     myTimestring = list(table2.date_time)
                     numtime = datestr2num(myTimestring)  # conv list of strings to numpy.ndarray of floats
 
-                else:
-                    utils.MessagebarAndLog.info(bar_msg=u"Pandas calculate failed.")
+                #else:
+                #    utils.MessagebarAndLog.info(bar_msg=u"Pandas calculate failed.")
 
         if FlagTimeXY == "time" and plottype == "step-pre":
             self.p[i], = self.axes.plot_date(numtime, table2.values, drawstyle='steps-pre', linestyle='-', marker='None',c=np.random.rand(3,1),label=self.plabels[i])# 'steps-pre' best for precipitation and flowmeters, optional types are 'steps', 'steps-mid', 'steps-post'
@@ -724,6 +724,8 @@ class PandasCalculations(object):
 
         self.widget = PyQt4.QtGui.QWidget()
 
+        self.corr_df = pd.DataFrame()
+
         #General settings
         self.rule_label = PyQt4.QtGui.QLabel(u'Resample rule')
         self.rule = PyQt4.QtGui.QLineEdit()
@@ -772,9 +774,12 @@ class PandasCalculations(object):
         hline = horizontal_line()
         hline.sizePolicy().setHorizontalPolicy(PyQt4.QtGui.QSizePolicy.Fixed)
         gridlayout.addWidget(hline)
+
+        self.corr = PyQt4.QtGui.QCheckBox(u'Simple correlation')
         for col1, col2 in [(self.rule_label, self.rule),
                            (self.base_label, self.base),
-                           (self.window_label, self.window)]:
+                           (self.window_label, self.window),
+                           (self.corr, u'')]:
             current_row = gridlayout.rowCount()
 
             try:
@@ -807,7 +812,7 @@ class PandasCalculations(object):
         else:
             return False
 
-    def calculate(self, df):
+    def calculate(self, df, plabel):
         #Resample
         rule = self.rule.text()
         base = self.base.text() if self.base.text() else 0
@@ -828,8 +833,12 @@ class PandasCalculations(object):
                 utils.MessagebarAndLog.critical(bar_msg=u'Rolling mean window must be an integer')
             else:
                 df = pd.rolling_mean(df, window=window, center=True)
-        return df
 
+        if self.corr.isChecked():
+            self.corr_df[plabel] = df
+
+
+        return df
 
 def horizontal_line():
     line = PyQt4.QtGui.QFrame()
@@ -837,3 +846,4 @@ def horizontal_line():
     line.setFrameShape(PyQt4.QtGui.QFrame.HLine)
     line.setFrameShadow(PyQt4.QtGui.QFrame.Sunken)
     return line
+
