@@ -577,6 +577,7 @@ class SurveyDialog(PyQt4.QtGui.QDialog):
         PyQt4.QtGui.QDialog.__init__(self, parent)
         
         self.resize(PyQt4.QtCore.QSize(500,250))
+        self.setWindowFlags(PyQt4.QtCore.Qt.Window | PyQt4.QtCore.Qt.WindowMinimizeButtonHint | PyQt4.QtCore.Qt.WindowMaximizeButtonHint | PyQt4.QtCore.Qt.WindowCloseButtonHint);
         
         self.setWindowTitle(ru(QCoreApplication.translate(u'SurveyDialog', u"Identify Results")))
         
