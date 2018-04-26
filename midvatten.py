@@ -741,11 +741,11 @@ class midvatten:
                 if geom.wkbType() == QGis.WKBLineString:#...and that the active layer is a line vector layer
                     pass
                 else:
-                    utils.MessagebarAndLog.critical(bar_msg=QCoreApplication.translate("Midvatten", 'You must activate the vector line layer that defines the section.'))
-                    error = True
+                    utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer that defines the section.'))
+                    error = False
         else:
-            utils.MessagebarAndLog.critical(bar_msg=QCoreApplication.translate("Midvatten", 'You must activate the vector line layer and select exactly one feature that defines the section'))
-            error = True
+            utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer and select exactly one feature that defines the section'))
+            error = False
         
         #Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
         obs_points_layer = utils.find_layer('obs_points')
@@ -756,8 +756,8 @@ class midvatten:
             # Made into tuple because module sectionplot depends on obsid being a tuple
             OBSID = ru(selectedobspoints, keep_containers=True)
         else:
-            utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten", 'You must select at least two objects in the obs_points layer')))
-            error = True
+            utils.MessagebarAndLog.warning(bar_msg=ru(QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must select at least two objects in the obs_points layer')))
+            error = False
 
         if not error:
             try:
