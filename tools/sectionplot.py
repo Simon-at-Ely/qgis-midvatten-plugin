@@ -360,9 +360,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             t.set_fontsize(self.secplot_templates.loaded_template['legend_Text_set_fontsize'])
 
         if self.sectionlinelayerflag == 0:  # test produces simple plot if flag = 0
-         self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'], axis='y')
+         self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid_simple'])
          self.secax.set_xticks(self.LengthAlong) # places ticks where plots are
-         self.secax.set_xticklabels(self.selected_obsids, fontsize=**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize']) # sets tick labels as obsids
+         self.secax.set_xticklabels(self.selected_obsids, set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])) # sets tick labels as obsids
         else:   # test produces section plot if flag = 1
          self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
          self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
@@ -380,8 +380,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         xlabel = self.secplot_templates.loaded_template.get('Axes_set_xlabel', {}).get('xlabel', defs.secplot_default_template()['Axes_set_xlabel']['xlabel'])
         self.secax.set_xlabel(xlabel, **Axes_set_xlabel)  #Allows international characters ('åäö') as xlabel
 
-        for label in self.secax.xaxis.get_ticklabels():
-            label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
         for label in self.secax.yaxis.get_ticklabels():
             label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
         """
