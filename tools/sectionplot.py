@@ -340,7 +340,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             layer = mc.layer(i)
             if layer.type() == layer.RasterLayer:
                 msg=ru(QCoreApplication.translate(u'SectionPlot', u'please notice that DEM(s) must be single band rasters and have same crs as your selected vector line layer'))
-                if layer.bandCount()==1:#only single band raster layers
+                 if layer.bandCount()==1:#only single band raster layers
                     #print('raster layer '  + layer.name() + ' has crs '+str(layer.crs().authid()[5:]))#debug
                     #print('polyline layer ' + self.sectionlinelayer.name() + ' has crs '+str(self.line_crs.authid()[5:]))#debug
                     if layer.crs().authid()[5:] == self.line_crs.authid()[5:]:#only raster layer with crs corresponding to line layer
@@ -360,13 +360,15 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             t.set_fontsize(self.secplot_templates.loaded_template['legend_Text_set_fontsize'])
 
         if self.sectionlinelayerflag == 0:  # test produces simple plot if flag = 0
-         self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid_simple'])
+         #self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid_simple'])#remove vertical (xaxis) grid lines needs debugging
+         self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
          self.secax.set_xticks(self.LengthAlong) # places ticks where plots are
-         self.secax.set_xticklabels(self.selected_obsids, set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])) # sets tick labels as obsids
+         for label in self.secax.set_xticklabels(self.selected_obsids):
+          label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])) 
         else:   # test produces section plot if flag = 1
          self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
          self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
-         for label in self.secax.xaxis.get_ticklabels():
+         for label in self.secax.xaxis.get_ticklabels(): # sets tick labels as obsids
           label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
 
         self.secax.yaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
