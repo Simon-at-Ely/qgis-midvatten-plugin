@@ -27,6 +27,13 @@
         "linestyle": "-",
         "which": "both",
         "zorder": 0},
+    "grid_Axes_grid_simple": {
+        "b": True,
+        "color": "0.65",
+        "linestyle": "-",
+        "which": "both",
+        "axes": "y",
+        "zorder": 0},
     "layer_Axes_annotate": {
         "bbox": {
                 "alpha": 0.6,
