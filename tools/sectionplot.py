@@ -335,12 +335,12 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.inData.clear()
         self.rastItems = {} #dictionary - layer name : layer
         mc = self.iface.mapCanvas()
-, axis='y'        msg=''
+        msg=''
         for i in range(mc.layerCount()):#find the raster layers
             layer = mc.layer(i)
             if layer.type() == layer.RasterLayer:
                 msg=ru(QCoreApplication.translate(u'SectionPlot', u'please notice that DEM(s) must be single band rasters and have same crs as your selected vector line layer'))
-                 if layer.bandCount()==1:#only single band raster layers
+                if layer.bandCount()==1:#only single band raster layers
                     #print('raster layer '  + layer.name() + ' has crs '+str(layer.crs().authid()[5:]))#debug
                     #print('polyline layer ' + self.sectionlinelayer.name() + ' has crs '+str(self.line_crs.authid()[5:]))#debug
                     if layer.crs().authid()[5:] == self.line_crs.authid()[5:]:#only raster layer with crs corresponding to line layer
@@ -364,7 +364,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
          self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
          self.secax.set_xticks(self.LengthAlong) # places ticks where plots are
          for label in self.secax.set_xticklabels(self.selected_obsids):
-          label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])) 
+          label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
         else:   # test produces section plot if flag = 1
          self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
          self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
