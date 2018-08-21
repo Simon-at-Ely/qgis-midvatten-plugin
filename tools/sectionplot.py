@@ -97,29 +97,37 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.comment_txt = []
         self.sectionlinelayer = SectionLineLayer       
         self.obsids_w_wl = []
+
+        if self.sectionlinelayer.selectedFeatureCount() == 1: # Test that layer and feature have been selected
         
-        #upload vector line layer as temporary table in sqlite db
-        self.line_crs = self.sectionlinelayer.crs()
-        #print(str(self.dbconnection.cursor().execute('select * from a.sqlite_master').fetchall()))
-        ok = self.upload_qgis_vector_layer(self.sectionlinelayer, self.line_crs.postgisSrid(), True, False)#loads qgis polyline layer into sqlite table
-        if not ok:
-            return None
+            #upload vector line layer as temporary table in sqlite db
+            self.line_crs = self.sectionlinelayer.crs()
+            #print(str(self.dbconnection.cursor().execute('select * from a.sqlite_master').fetchall()))
+            ok = self.upload_qgis_vector_layer(self.sectionlinelayer, self.line_crs.postgisSrid(), True, False)#loads qgis polyline layer into sqlite table
+            if not ok:
+                return None
 
-        #print(str(self.dbconnection.cursor().execute('select * from %s'%self.temptable_name).fetchall()))
-        # get sorted obsid and distance along section from sqlite db
-        nF = len(OBSIDtuplein)#number of Features
-        LengthAlongTable = self.get_length_along(OBSIDtuplein)#get_length_along returns a numpy view, values are returned by LengthAlongTable.obs_id or LengthAlongTable.length
-        self.selected_obsids = LengthAlongTable.obs_id
-        self.LengthAlong = LengthAlongTable.length
+            #print(str(self.dbconnection.cursor().execute('select * from %s'%self.temptable_name).fetchall()))
+            # get sorted obsid and distance along section from sqlite db
+            nF = len(OBSIDtuplein)#number of Features
+            LengthAlongTable = self.get_length_along(OBSIDtuplein)#get_length_along returns a numpy view, values are returned by LengthAlongTable.obs_id or LengthAlongTable.length
+            self.selected_obsids = LengthAlongTable.obs_id
+            self.LengthAlong = LengthAlongTable.length
 
-        # hidden feature, printout to python console
-        utils.MessagebarAndLog.info(log_msg=ru(
-            QCoreApplication.translate(u'SectionPlot',
-                                       u'Hidden features, obsids and length along section:\n%s\%s'))%
-                                            (u';'.join(self.selected_obsids),
-                                             u';'.join([str(x) for x in self.LengthAlong])))
+            # hidden feature, printout to python console
+            utils.MessagebarAndLog.info(log_msg=ru(
+                QCoreApplication.translate(u'SectionPlot',
+                                           u'Hidden features, obsids and length along section:\n%s\%s'))%
+                                               (u';'.join(self.selected_obsids),
+                                                 u';'.join([str(x) for x in self.LengthAlong])))
 
-        self.fill_dem_list()
+            self.fill_dem_list()
+            self.sectionlinelayerflag = 1
+
+        else:
+            self.selected_obsids = OBSIDtuplein
+            self.LengthAlong = range(0, 10 * len(self.selected_obsids), 10)
+            self.sectionlinelayerflag = 0
 
         
         PyQt4.QtGui.QApplication.restoreOverrideCursor() #now this long process is done and the cursor is back as normal
@@ -369,10 +377,18 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         for t in leg.get_texts():
             t.set_fontsize(self.secplot_templates.loaded_template['legend_Text_set_fontsize'])
 
-        self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
+        if self.sectionlinelayerflag == 0: # Test produces simple plot if flag = 0
+            self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
+            self.secax.set_xticks(self.LengthAlong) # Places ticks where plots are
+            for label in self.secax.set_xticklabels(self.selected_obsids): # Sets tick labels as obsids
+                label.set_fontsize(self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
+        else: # Test produces sectionplot if flag = 1
+            self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
+            self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
+            for label in self.secax.xaxis.get_ticklabels():
+                label.set_fontsize(self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
 
         self.secax.yaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
-        self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
 
         Axes_set_ylabel = dict([(k, v) for k, v in self.secplot_templates.loaded_template.get('Axes_set_ylabel', {}).iteritems() if k != 'ylabel'])
         ylabel = self.secplot_templates.loaded_template.get('Axes_set_ylabel', {}).get('ylabel', defs.secplot_default_template()['Axes_set_ylabel']['ylabel'])
@@ -382,8 +398,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         xlabel = self.secplot_templates.loaded_template.get('Axes_set_xlabel', {}).get('xlabel', defs.secplot_default_template()['Axes_set_xlabel']['xlabel'])
         self.secax.set_xlabel(xlabel, **Axes_set_xlabel)  #Allows international characters ('åäö') as xlabel
 
-        for label in self.secax.xaxis.get_ticklabels():
-            label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
         for label in self.secax.yaxis.get_ticklabels():
             label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
         """
