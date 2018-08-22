@@ -381,12 +381,12 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
             self.secax.set_xticks(self.LengthAlong) # Places ticks where plots are
             for label in self.secax.set_xticklabels(self.selected_obsids): # Sets tick labels as obsids
-                label.set_fontsize(self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
+                label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
         else: # Test produces sectionplot if flag = 1
             self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
             self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
             for label in self.secax.xaxis.get_ticklabels():
-                label.set_fontsize(self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
+                label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
 
         self.secax.yaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
 
