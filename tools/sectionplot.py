@@ -378,7 +378,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             t.set_fontsize(self.secplot_templates.loaded_template['legend_Text_set_fontsize'])
 
         if self.sectionlinelayerflag == 0: # Test produces simple plot if flag = 0
-            self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
             self.secax.set_xticks(self.LengthAlong) # Places ticks where plots are
             for label in self.secax.set_xticklabels(self.selected_obsids): # Sets tick labels as obsids
                 label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
@@ -387,16 +386,20 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
             for label in self.secax.xaxis.get_ticklabels():
                 label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
+            Axes_set_xlabel = dict(
+                [(k, v) for k, v in self.secplot_templates.loaded_template.get('Axes_set_xlabel', {}).iteritems() if
+                 k != 'xlabel'])
+            xlabel = self.secplot_templates.loaded_template.get('Axes_set_xlabel', {}).get('xlabel',
+                                                                                           defs.secplot_default_template()[
+                                                                                               'Axes_set_xlabel'][
+                                                                                               'xlabel'])
+            self.secax.set_xlabel(xlabel, **Axes_set_xlabel)  # Allows international characters ('åäö') as xlabel
 
         self.secax.yaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
 
         Axes_set_ylabel = dict([(k, v) for k, v in self.secplot_templates.loaded_template.get('Axes_set_ylabel', {}).iteritems() if k != 'ylabel'])
         ylabel = self.secplot_templates.loaded_template.get('Axes_set_ylabel', {}).get('ylabel', defs.secplot_default_template()['Axes_set_ylabel']['ylabel'])
         self.secax.set_ylabel(ylabel, **Axes_set_ylabel)  #Allows international characters ('åäö') as ylabel
-
-        Axes_set_xlabel = dict([(k, v) for k, v in self.secplot_templates.loaded_template.get('Axes_set_xlabel', {}).iteritems() if k != 'xlabel'])
-        xlabel = self.secplot_templates.loaded_template.get('Axes_set_xlabel', {}).get('xlabel', defs.secplot_default_template()['Axes_set_xlabel']['xlabel'])
-        self.secax.set_xlabel(xlabel, **Axes_set_xlabel)  #Allows international characters ('åäö') as xlabel
 
         for label in self.secax.yaxis.get_ticklabels():
             label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
