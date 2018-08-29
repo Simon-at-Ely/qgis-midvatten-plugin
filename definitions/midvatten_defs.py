@@ -725,6 +725,9 @@ def secplot_default_template():
         loaded_template['Axes_set_xlabel'] = {
             'xlabel': ru(QCoreApplication.translate(u'SectionPlot', u"Distance along section")),
             'fontsize': 10}
+        loaded_template['Axes_set_xlabel_stratplot'] = {
+            'xlabel': ru(QCoreApplication.translate(u'SectionPlot', u"Observation Location Code")),
+            'fontsize': 10}
         loaded_template['Axes_set_xlim'] = None  # Tuple like (min, max)
         loaded_template['Axes_set_ylim'] = None  # Tuple like (min, max)
         loaded_template['Axes_set_ylabel'] = {

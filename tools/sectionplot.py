@@ -381,6 +381,15 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.secax.set_xticks(self.LengthAlong) # Places ticks where plots are
             for label in self.secax.set_xticklabels(self.selected_obsids): # Sets tick labels as obsids
                 label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
+            Axes_set_xlabel = dict(
+                [(k, v) for k, v in self.secplot_templates.loaded_template.get('Axes_set_xlabel_stratplot', {}).iteritems() if
+                 k != 'xlabel'])
+            xlabel = self.secplot_templates.loaded_template.get('Axes_set_xlabel', {}).get('xlabel',
+                                                                                           defs.secplot_default_template()[
+                                                                                               'Axes_set_xlabel_stratplot'][
+                                                                                               'xlabel'])
+            self.secax.set_xlabel(xlabel, **Axes_set_xlabel)  # Allows international characters ('åäö') as xlabel
+
         else: # Test produces sectionplot if flag = 1
             self.secax.grid(**self.secplot_templates.loaded_template['grid_Axes_grid'])
             self.secax.xaxis.set_major_formatter(tick.ScalarFormatter(useOffset=False, useMathText=False))
