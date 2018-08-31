@@ -270,6 +270,11 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         else:
             self.Labels_checkBox.setChecked(False)
 
+        if self.ms.settingsdict['secplotlegendplotted']==2:
+            self.Labels_checkBox.setChecked(True)
+        else:
+            self.Labels_checkBox.setChecked(False)
+
         if self.ms.settingsdict['secplotwidthofplot'] == 2:
             self.width_of_plot.setChecked(True)
         else:
