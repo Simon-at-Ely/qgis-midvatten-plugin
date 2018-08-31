@@ -47,7 +47,7 @@ from PyQt4.QtCore import QCoreApplication
 
 #from ui.secplotdockwidget_ui import Ui_SecPlotDock
 from PyQt4 import uic
-Ui_SecPlotDock =  uic.loadUiType(os.path.join(os.path.dirname(__file__),'..','ui', 'plotdockwidget.ui'))[0]
+Ui_SecPlotDock =  uic.loadUiType(os.path.join(os.path.dirname(__file__),'..','ui', 'secplotdockwidget2_ui.ui'))[0]
 
 import definitions.midvatten_defs as defs
 from sampledem import qchain, sampling
