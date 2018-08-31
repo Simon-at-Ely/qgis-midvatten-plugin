@@ -316,7 +316,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.wlvltableComboBox.addItem('')         
         for tabell in tabeller:
             self.wlvltableComboBox.addItem(tabell)
-        textitems=['','geology','geoshort','capacity','development','comment']
+        textitems=['','geology','geoshort','capacity', 'hydroexplanation','development','comment']
         for item in textitems:
             self.textcolComboBox.addItem(item)
         self.drillstoplineEdit.setText(self.ms.settingsdict['secplotdrillstop'])
@@ -852,7 +852,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             annotate_txt = self.geoshort_txt
         elif self.ms.settingsdict['secplottext'] == 'capacity':
             annotate_txt = self.capacity_txt
-        elif self.ms.settingsdict['secplottext'] == 'hydro explanation':
+        elif self.ms.settingsdict['secplottext'] == 'hydroexplanation':
             annotate_txt = self.hydro_explanation_txt
         elif self.ms.settingsdict['secplottext'] == 'development':
             annotate_txt = self.development_txt
