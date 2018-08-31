@@ -183,6 +183,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.ms.settingsdict['secplotdrillstop'] = self.drillstoplineEdit.text()
             self.ms.settingsdict['stratigraphyplotted'] = self.Stratigraphy_checkBox.checkState()
             self.ms.settingsdict['secplotlabelsplotted'] = self.Labels_checkBox.checkState()
+            self.ms.settingsdict['secplotlegendplotted'] = self.Legend_checkBox.checkState()
             self.get_dem_selection()
             self.ms.settingsdict['secplotselectedDEMs'] = self.rasterselection
             #fix Floating Bar Width in percents of xmax - xmin
@@ -369,13 +370,14 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.get_dem_selection()
 
     def finish_plot(self):
-        leg = self.secax.legend(self.p, self.Labels, **self.secplot_templates.loaded_template['legend_Axes_legend'])
-        leg.draggable(state=True)
-        frame = leg.get_frame()    # the matplotlib.patches.Rectangle instance surrounding the legend
-        frame.set_facecolor(self.secplot_templates.loaded_template['legend_Frame_set_facecolor'])    # set the frame face color to white
-        frame.set_fill(self.secplot_templates.loaded_template['legend_Frame_set_fill'])
-        for t in leg.get_texts():
-            t.set_fontsize(self.secplot_templates.loaded_template['legend_Text_set_fontsize'])
+        if self.ms.settingsdict['secplotlegendplotted'] == 2: #Include Legend in plot
+            leg = self.secax.legend(self.p, self.Labels, **self.secplot_templates.loaded_template['legend_Axes_legend'])
+            leg.draggable(state=True)
+            frame = leg.get_frame()    # the matplotlib.patches.Rectangle instance surrounding the legend
+            frame.set_facecolor(self.secplot_templates.loaded_template['legend_Frame_set_facecolor'])    # set the frame face color to white
+            frame.set_fill(self.secplot_templates.loaded_template['legend_Frame_set_fill'])
+            for t in leg.get_texts():
+                t.set_fontsize(self.secplot_templates.loaded_template['legend_Text_set_fontsize'])
 
         if self.sectionlinelayerflag == 0: # Test produces simple plot if flag = 0
             self.secax.set_xticks(self.LengthAlong) # Places ticks where plots are
