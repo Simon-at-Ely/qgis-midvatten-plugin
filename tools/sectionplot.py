@@ -272,7 +272,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         if self.ms.settingsdict['stratigraphyplotted']==True:
             self.Stratigraphy_radioButton.setChecked(True)
         else:
-            self.Stratigraphy_checkBox.setChecked(False)
+            self.Stratigraphy_radioButton.setChecked(False)
         if self.ms.settingsdict['secplotlabelsplotted']==2:
             self.Labels_checkBox.setChecked(True)
         else:
