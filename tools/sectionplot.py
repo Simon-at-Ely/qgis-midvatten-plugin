@@ -500,6 +500,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.ExistingPlotTypes = []
         self.Hatches = defs.PlotHatchDict()
         self.Colors = defs.PlotColorDict()
+        self.hydroColors = defs.hydrocolors()
         #print(self.Colors)#debug
 
         #self.ms.settingsdict['secplotbw'] = self.barwidthdoubleSpinBox.value()
@@ -730,6 +731,37 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
             self.Labels.append(Typ)
 
+    def plot_hydrology(self):
+        for Typ in self.ExistingPlotTypes:#Adding a plot for each "geoshort" that is identified
+            #Try to get one setting per geoshort.
+            _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
+            try:
+                settings = _settings[Typ]
+            except KeyError:
+                try:
+                    settings = _settings['DEFAULT']
+                except KeyError:
+                    settings = _settings
+
+            for _Typ in self.ExistingPlotTypes:
+                try:
+                    del settings[_Typ]
+                except KeyError:
+                    pass
+            try:
+                del settings['DEFAULT']
+            except KeyError:
+                pass
+
+            settings['width'] = settings.get('width', self.barwidth)
+            settings['color'] = settings.get('color', self.Colors[Typ])
+            settings['hatch'] = settings.get('hatch', self.Hatches[Typ])
+
+            plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
+            self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
+            self.Labels.append(Typ)
+
+
     def plot_obs_lines_data(self):
         plotlable = self.get_plot_label_name(self.y1_column, self.Labels)
         self.Labels.append(self.y1_column)
@@ -854,7 +886,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         elif self.ms.settingsdict['secplottext'] == 'capacity':
             annotate_txt = self.capacity_txt
         elif self.ms.settingsdict['secplottext'] == 'hydroexplanation':
-            annotate_txt = self.hydrocolors.get(self.hydro_explanation_txt, '')[0]
+            annotate_txt = self.hydroColors.get(self.hydro_explanation_txt, '')[0]
         elif self.ms.settingsdict['secplottext'] == 'development':
             annotate_txt = self.development_txt
         else:
