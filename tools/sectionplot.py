@@ -197,7 +197,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.p=[]
             self.Labels=[]
 
-            if self.ms.settingsdict['stratigraphyplotted'] ==2:
+            if self.ms.settingsdict['stratigraphyplotted'] ==True:
                 #PLOT ALL MAIN GEOLOGY TYPES AS SINGLE FLOATING BAR SERIES
                 self.plot_geology()
                 #WRITE TEXT BY ALL GEOLOGY TYPES, ADJACENT TO FLOATING BAR SERIES
@@ -224,7 +224,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plot_dems()
 
             #write obsid at top of each stratigraphy floating bar plot, also plot empty bars to show drillings without stratigraphy data
-            if self.ms.settingsdict['stratigraphyplotted'] ==2 or (self.ms.settingsdict['secplotdates'] and len(self.ms.settingsdict['secplotdates'])>0):
+            if self.ms.settingsdict['stratigraphyplotted'] ==True or (self.ms.settingsdict['secplotdates'] and len(self.ms.settingsdict['secplotdates'])>0):
                 self.write_obsid(self.ms.settingsdict['secplotlabelsplotted'])#if argument is 2, then labels will be plotted, otherwise only empty bars
 
             #labels, grid, legend etc.
@@ -901,7 +901,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.annotationtext = self.secax.annotate(o, xy=(m,n), **self.secplot_templates.loaded_template['layer_Axes_annotate'])#textcoords = 'offset points' makes the text being written xytext points from the data point xy (xy positioned with respect to axis values and then the text is offset a specific number of points from that point
 
     def write_obsid(self, plot_labels=2):#annotation, and also empty bars to show drillings without stratigraphy data
-        if self.ms.settingsdict['stratigraphyplotted'] ==2:#if stratigr plot, then obsid written close to toc or gs
+        if self.ms.settingsdict['stratigraphyplotted'] ==True:#if stratigr plot, then obsid written close to toc or gs
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.x_id]#x-coord for bars at each obs
 
             indexes_barlength_not_0 = [idx for idx, length in enumerate(self.barlengths) if length]
