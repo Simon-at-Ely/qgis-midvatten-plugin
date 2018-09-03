@@ -269,9 +269,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         return header,data
 
     def fill_check_boxes(self):#sets checkboxes to last selection
-         if self.ms.settingsdict['stratigraphyplotted']==True:
+        if self.ms.settingsdict['stratigraphyplotted']==True:
             self.Stratigraphy_radioButton.setChecked(True)
-         else:
+        else:
             self.Stratigraphy_checkBox.setChecked(False)
         if self.ms.settingsdict['secplotlabelsplotted']==2:
             self.Labels_checkBox.setChecked(True)
