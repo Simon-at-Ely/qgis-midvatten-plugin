@@ -203,7 +203,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 #WRITE TEXT BY ALL GEOLOGY TYPES, ADJACENT TO FLOATING BAR SERIES
                 if len(self.ms.settingsdict['secplottext'])>0:
                     self.write_annotation()
-            if self.ms.settingsdict['secplothydrologyplotted'] ==2:
+            if self.ms.settingsdict['secplothydrologyplotted'] ==True:
                 #PLOT ALL MAIN HYDROLOGY TYPES AS SINGLE FLOATING BAR SERIES
                 self.plot_hydrology()
                 #WRITE TEXT BY ALL HYDROLOGY TYPES, ADJACENT TO FLOATING BAR SERIES
