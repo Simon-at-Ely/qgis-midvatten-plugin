@@ -273,6 +273,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.Stratigraphy_radioButton.setChecked(True)
         else:
             self.Stratigraphy_radioButton.setChecked(False)
+        if self.ms.settingsdict['secplothydrologyplotted']==True:
+            self.Hydrology_radioButton.setChecked(True)
+        else:
+            self.Hydrology_radioButton.setChecked(False)
         if self.ms.settingsdict['secplotlabelsplotted']==2:
             self.Labels_checkBox.setChecked(True)
         else:
