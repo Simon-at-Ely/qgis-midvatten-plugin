@@ -754,7 +754,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 except KeyError:
                     settings = _settings
 
-            for _Typ in self.ExistingPlotTypes:
+            for _Typ in self.capacity_txt:
                 try:
                     del settings[_Typ]
                 except KeyError:
@@ -765,7 +765,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 pass
 
             settings['width'] = settings.get('width', self.barwidth)
-            settings['color'] = settings.get('color', self.hydroColors[Typ])
+            settings['color'] = settings.get('color_qt', self.hydroColors[Typ])
 
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
             self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
