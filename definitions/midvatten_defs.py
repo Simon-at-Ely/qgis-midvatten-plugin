@@ -55,6 +55,7 @@ def settingsdict():    #These are the default settings, they shall not be change
             'secplotlocation':8,
             'secplotselectedDEMs':[],
             'stratigraphyplotted':2,
+            'secplothydrologyplotted':0,
             'secplotlabelsplotted':0,
             'secplotlegendplotted':2,
             'secplot_loaded_template': '',

@@ -182,7 +182,8 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.ms.settingsdict['secplottext'] = self.textcolComboBox.currentText()
             self.ms.settingsdict['secplotbw'] = self.barwidthdoubleSpinBox.value()
             self.ms.settingsdict['secplotdrillstop'] = self.drillstoplineEdit.text()
-            self.ms.settingsdict['stratigraphyplotted'] = self.Stratigraphy_checkBox.checkState()
+            self.ms.settingsdict['stratigraphyplotted'] = self.Stratigraphy_radioButton.isChecked()
+            self.ms.settingsdict['secplothydrologyplotted'] = self.Hydrology_radioButton.isChecked()
             self.ms.settingsdict['secplotlabelsplotted'] = self.Labels_checkBox.checkState()
             self.ms.settingsdict['secplotlegendplotted'] = self.Legend_checkBox.checkState()
             self.get_dem_selection()
@@ -200,6 +201,12 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 #PLOT ALL MAIN GEOLOGY TYPES AS SINGLE FLOATING BAR SERIES
                 self.plot_geology()
                 #WRITE TEXT BY ALL GEOLOGY TYPES, ADJACENT TO FLOATING BAR SERIES
+                if len(self.ms.settingsdict['secplottext'])>0:
+                    self.write_annotation()
+            if self.ms.settingsdict['secplothydrologyplotted'] ==2:
+                #PLOT ALL MAIN HYDROLOGY TYPES AS SINGLE FLOATING BAR SERIES
+                self.plot_hydrology()
+                #WRITE TEXT BY ALL HYDROLOGY TYPES, ADJACENT TO FLOATING BAR SERIES
                 if len(self.ms.settingsdict['secplottext'])>0:
                     self.write_annotation()
             if self.ms.settingsdict['secplotdates'] and len(self.ms.settingsdict['secplotdates'])>0: #PLOT Water Levels
@@ -262,10 +269,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         return header,data
 
     def fill_check_boxes(self):#sets checkboxes to last selection
-        if self.ms.settingsdict['stratigraphyplotted']==2:
-            self.Stratigraphy_checkBox.setChecked(True)
-        else:
-            self.Stratigraphy_checkBox.setChecked(False)        
+        # if self.ms.settingsdict['stratigraphyplotted']==2:
+        #    self.Stratigraphy_checkBox.setChecked(True)
+        # else:
+        #    self.Stratigraphy_checkBox.setChecked(False)
         if self.ms.settingsdict['secplotlabelsplotted']==2:
             self.Labels_checkBox.setChecked(True)
         else:
@@ -754,8 +761,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 pass
 
             settings['width'] = settings.get('width', self.barwidth)
-            settings['color'] = settings.get('color', self.Colors[Typ])
-            settings['hatch'] = settings.get('hatch', self.Hatches[Typ])
+            settings['color'] = settings.get('color', self.hydroColors[Typ])
 
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
             self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
