@@ -254,27 +254,49 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="Stratigraphy_radioButton">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
+        <widget class="QGroupBox" name="Strat_Hydro_groupBox">
+         <property name="title">
+          <string>GroupBox</string>
          </property>
-         <property name="text">
-          <string>Stratigraphy</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="Hydrology_radioButton">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Hydrology</string>
-         </property>
+         <widget class="QRadioButton" name="Stratigraphy_radioButton">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>105</width>
+            <height>40</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Stratigraphy</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="Hydrology_radioButton">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>0</y>
+            <width>105</width>
+            <height>40</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Hydrology</string>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>
