@@ -576,7 +576,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         self.geology_txt.append(utils.null_2_empty_string(ru(recs[j][2])))
                         self.geoshort_txt.append(utils.null_2_empty_string(ru(recs[j][3])))
                         self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
-                        self.hydro_explanation_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
+                        self.capacity.append(utils.null_2_empty_string(ru(recs[j][4])))
                         self.development_txt.append(utils.null_2_empty_string(ru(recs[j][5])))
                         self.comment_txt.append(utils.null_2_empty_string(ru(recs[j][6])))
                         #print obs + " " + Typ + " " + self.geology_txt[l] + " " + self.geoshort_txt[l] + " " + self.capacity_txt[l] + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
@@ -880,7 +880,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         elif self.ms.settingsdict['secplottext'] == 'capacity':
             annotate_txt = self.capacity_txt
         elif self.ms.settingsdict['secplottext'] == 'hydroexplanation':
-            annotate_txt = self.hydroColors.get(self.hydro_explanation_txt, '')[0]
+            annotate_txt = self.hydroColors.get(self.capacity, '')[0]
         elif self.ms.settingsdict['secplottext'] == 'development':
             annotate_txt = self.development_txt
         else:
