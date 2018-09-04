@@ -746,25 +746,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         for Typ in self.ExistingPlotTypes:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
-            try:
-                settings = _settings[Typ]
-            except KeyError:
-                try:
-                    settings = _settings['DEFAULT']
-                except KeyError:
-                    settings = _settings
 
-            for _Typ in self.ExistingPlotTypes:
-                try:
-                    del settings[_Typ]
-                except KeyError:
-                    pass
-            try:
-                del settings['DEFAULT']
-            except KeyError:
-                pass
 
-            settings['width'] = settings.get('width', self.barwidth)
+            # settings['width'] = settings.get('width', self.barwidth)
             # settings['color'] = settings.get('color_qt', self.hydroColors[Typ])
 
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
