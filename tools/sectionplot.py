@@ -882,11 +882,11 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         elif self.ms.settingsdict['secplottext'] == 'hydroexplanation':
             # print(str(self.capacity_txt))
             # print(str(self.hydroColors))
-            if self.capacity_txt is None or self.capacity_txt=='NULL':
-                annotate_txt = ''
-            else:
-                for capacity_txt in self.capacity_txt:
-                    annotate_txt = self.hydroColors.get(capacity_txt, [' '])[0]
+            #if self.capacity_txt is None or self.capacity_txt=='NULL':
+            #    annotate_txt = ''
+            #else:
+            for capacity_txt in self.capacity_txt:
+                annotate_txt = self.hydroColors.get(capacity_txt, [' '])[0]
         elif self.ms.settingsdict['secplottext'] == 'development':
             annotate_txt = self.development_txt
         else:
