@@ -879,6 +879,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             annotate_txt = self.geoshort_txt
         elif self.ms.settingsdict['secplottext'] == 'capacity':
             for capacity_txt in self.capacity_txt:
+                print(str(capacity_txt))
                 annotate_txt = capacity_txt
         elif self.ms.settingsdict['secplottext'] == 'hydroexplanation':
             # print(str(self.capacity_txt))
