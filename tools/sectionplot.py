@@ -884,7 +884,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.hydro_list = []
             for capacity_txt in self.capacity_txt:
                 if capacity_txt is None or capacity_txt=='NULL':
-                    self.hydro_list.append(capacity_txt)
+                    self.hydro_list.append('')
                 else:
                     self.hydro_list.append(self.hydroColors.get(capacity_txt, [' '])[0])
                 annotate_txt = self.hydro_list
