@@ -751,13 +751,29 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.Labels.append(Typ)
 
     def plot_hydrology(self):
-        for Typ in self.ExistingPlotTypes:#Adding a plot for each "geoshort" that is identified
+        for Typ in self.hydro_explanation_txt:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
-            settings = _settings[Typ]
+            try:
+                settings = _settings[Typ]
+            except KeyError:
+                try:
+                    settings = _settings['DEFAULT']
+                except KeyError:
+                    settings = _settings
+
+            for _Typ in self.hydro_explanation_txt:
+                try:
+                    del settings[_Typ]
+                except KeyError:
+                    pass
+            try:
+                del settings['DEFAULT']
+            except KeyError:
+                pass
 
             settings['width'] = settings.get('width', self.barwidth)
-            # settings['color'] = settings.get('color_qt', self.hydroColors[Typ])
+            settings['color'] = settings.get('color_qt', self.hydroColors[Typ])
 
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
             self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
