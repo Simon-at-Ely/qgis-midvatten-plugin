@@ -583,7 +583,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         #print obs + " " + Typ + " " + self.geology_txt[l] + " " + self.geoshort_txt[l] + " " + self.capacity_txt[l] + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
                         self.hydro_list = []
                         for capacity_txt in self.capacity_txt:
-                            if capacity_txt is None or capacity_txt=='':
+                            if capacity_txt is None or capacity_txt == '':
                                 self.hydro_list.append('')
                             else:
                                 self.hydro_list.append(self.hydroColors.get(capacity_txt, [' '])[0])
@@ -594,7 +594,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 k +=1
             if len(x)>0:
                 self.ExistingPlotTypes.append(Typ)
-                self.ExistingHydroTypes.append()
+                # self.ExistingHydroTypes.append()
                 self.plotx[Typ] = x
                 self.plotbottom[Typ] = Bottom
                 self.plotbarlength[Typ] = BarLength
