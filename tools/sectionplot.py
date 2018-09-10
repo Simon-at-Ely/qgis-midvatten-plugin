@@ -577,12 +577,16 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         self.geology_txt.append(utils.null_2_empty_string(ru(recs[j][2])))
                         self.geoshort_txt.append(utils.null_2_empty_string(ru(recs[j][3])))
                         self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
-                        # self.capacity.append(utils.null_2_empty_string(ru(recs[j][4])))
                         self.development_txt.append(utils.null_2_empty_string(ru(recs[j][5])))
                         self.comment_txt.append(utils.null_2_empty_string(ru(recs[j][6])))
                         #print obs + " " + Typ + " " + self.geology_txt[l] + " " + self.geoshort_txt[l] + " " + self.capacity_txt[l] + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
                         self.hydro_explanation_txt = []
+                        self.EHTyp = []
                         for capacity_txt in self.capacity_txt:
+                            if not capacity_txt in self.EHTyp:
+                                self.ExistingHydroTypes.append(capacity_txt)
+                                for c_txt in self.EHTyp:
+                                    self.ExistingHydroTypes.append(self.hydroColors.get(c_txt, (ru([''])))[0])
                             if capacity_txt is None or capacity_txt == '':
                                 self.hydro_explanation_txt.append('')
                             else:
@@ -595,7 +599,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 k +=1
             if len(x)>0:
                 self.ExistingPlotTypes.append(Typ)
-                self.ExistingHydroTypes.append(self.hydroColors.get(capacity_txt, (ru([''])))[0])
+                # self.ExistingHydroTypes.append(self.hydroColors.get(capacity_txt, (ru([''])))[0])
                 self.plotx[Typ] = x
                 self.plotbottom[Typ] = Bottom
                 self.plotbarlength[Typ] = BarLength
