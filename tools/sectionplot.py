@@ -590,8 +590,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                             else:
                                 self.hydro_explanation_txt.append(self.hydroColors.get(capacity_txt, [' '])[0])
                             #    self.ExistingHydroTypes.append(self.hydroColors.get(capacity_txt, [' '])[0])
-                        for c_txt in self.EHTyp:
-                            self.ExistingHydroTypes.append(self.hydroColors.get(c_txt, (ru([''])))[0])
                         i +=1
                         j +=1
                         l +=1
@@ -604,7 +602,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plotbottom[Typ] = Bottom
                 self.plotbarlength[Typ] = BarLength
 
-        #Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any 
+        for c_txt in self.EHTyp:
+            self.ExistingHydroTypes.append(self.hydroColors.get(c_txt, (ru([''])))[0])
+        #Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any
         My_format = [('obsline_x', float), ('obsline_y1', float), ('obsline_y2', float)]
         obsline_x=[]
         obsline_y1=[]#bedrock
