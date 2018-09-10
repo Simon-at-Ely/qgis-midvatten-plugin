@@ -713,6 +713,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             return label + '_' + str(label_occurence + 1)
 
     def plot_geology(self):
+        print(str(self.ExistingPlotTypes))
         for Typ in self.ExistingPlotTypes:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
