@@ -584,7 +584,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         self.EHTyp = []
                         for capacity_txt in self.capacity_txt:
                             if not capacity_txt in self.EHTyp:
-                                self.ExistingHydroTypes.append(capacity_txt)
+                                self.EHTyp.append(capacity_txt)
                                 for c_txt in self.EHTyp:
                                     self.ExistingHydroTypes.append(self.hydroColors.get(c_txt, (ru([''])))[0])
                             if capacity_txt is None or capacity_txt == '':
