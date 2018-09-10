@@ -723,7 +723,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             return label + '_' + str(label_occurence + 1)
 
     def plot_geology(self):
-        print(str(self.ExistingPlotTypes))
+        # print(str(self.ExistingPlotTypes))
         for Typ in self.ExistingPlotTypes:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
@@ -754,7 +754,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.Labels.append(Typ)
 
     def plot_hydrology(self):
-        for Typ in self.hydro_explanation_txt:#Adding a plot for each "geoshort" that is identified
+        for Typ in self.ExistingHydroTypes:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
             try:
@@ -765,7 +765,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 except KeyError:
                     settings = _settings
 
-            for _Typ in self.hydro_explanation_txt:
+            for _Typ in self.ExistingHydroTypes:
                 try:
                     del settings[_Typ]
                 except KeyError:
