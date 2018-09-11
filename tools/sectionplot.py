@@ -758,6 +758,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         for Typ in self.ExistingHydroTypes:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
+            print(str(_settings))
             try:
                 settings = _settings[Typ]
                 print(str(settings))
