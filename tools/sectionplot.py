@@ -748,6 +748,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             settings['width'] = settings.get('width', self.barwidth)
             settings['color'] = settings.get('color', self.Colors[Typ])
             settings['hatch'] = settings.get('hatch', self.Hatches[Typ])
+            print(str(settings))
 
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
             self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
