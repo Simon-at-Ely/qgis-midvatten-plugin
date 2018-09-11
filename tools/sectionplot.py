@@ -760,6 +760,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
             try:
                 settings = _settings[Typ]
+                print(str(settings))
             except KeyError:
                 try:
                     settings = _settings['DEFAULT']
