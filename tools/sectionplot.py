@@ -494,51 +494,51 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         del data, npdata
         return LengthAlongTable
 
-    def get_plot_data(self):#this is called when class is instantiated, collecting data specific for the profile line layer and the obs_points
-        PyQt4.QtGui.QApplication.setOverrideCursor(PyQt4.QtGui.QCursor(PyQt4.QtCore.Qt.WaitCursor))#show the user this may take a long time...
+    def get_plot_data(self):  # called when class is instantiated collecting data for profile line layer & obs_points
+        PyQt4.QtGui.QApplication.setOverrideCursor(PyQt4.QtGui.QCursor(PyQt4.QtCore.Qt.WaitCursor))  # show user this may take a long time...
         self.plotx = {}
         self.plotbottom = {}
         self.plotbarlength = {}
         self.plotx_h = {}
         self.plotbottom_h = {}
         self.plotbarlength_h = {}
-        l=0 #counter fro unique obs, stratid and typ
-        self.x_txt = []#used by self.WriteAnnotation
-        self.z_txt = []#used by self.WriteAnnotation
-        self.x_id = []#used by self.write_obsid
-        self.z_id=[]#used by self.write_obsid
-        self.barlengths=[]#used by self.write_obsid, not to be mixed with "BarLength" used locally in this function
-        self.bottoms=[]#used by self.write_obsid, not to be mixed with "Bottom" used locally in this function
+        l = 0  # counter fro unique obs, stratid and typ
+        self.x_txt = []  # used by self.WriteAnnotation
+        self.z_txt = []  # used by self.WriteAnnotation
+        self.x_id = []  # used by self.write_obsid
+        self.z_id=[]  # used by self.write_obsid
+        self.barlengths=[]  # used by self.write_obsid, not to be mixed with "BarLength" used locally in this function
+        self.bottoms=[]  # mused by self.write_obsid, not to be mixed with "Bottom" used locally in this function
         self.PlotTypes = defs.PlotTypesDict()
-        #print(self.PlotTypes)#debug
+        # print(self.PlotTypes)#debug
         self.ExistingPlotTypes = []
         self.ExistingHydroTypes = []
         self.Hatches = defs.PlotHatchDict()
         self.Colors = defs.PlotColorDict()
         self.hydroColors = defs.hydrocolors()
-        #print(self.Colors)#debug
+        # print(self.Colors)#debug
 
-        #self.ms.settingsdict['secplotbw'] = self.barwidthdoubleSpinBox.value()
-        ##fix Floating Bar Width in percents of xmax - xmin
-        #xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
-        #self.barwidth = (self.ms.settingsdict['secplotbw']/100.0)*(xmax -xmin)
+        # self.ms.settingsdict['secplotbw'] = self.barwidthdoubleSpinBox.value()
+        # fix Floating Bar Width in percents of xmax - xmin
+        # xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
+        # self.barwidth = (self.ms.settingsdict['secplotbw']/100.0)*(xmax -xmin)
         
-        for Typ in self.PlotTypes:#Adding a plot for each "geoshort" that is identified
-            i=0 #counter for unique obs and stratid
-            k=0 #counter for unique Typ
-            q=0 #counter for unique obsid (only used in first Typ-loop)
+        for Typ in self.PlotTypes:  # Adding a plot for each "geoshort" that is identified
+            i = 0  # counter for unique obs and stratid
+            k = 0  # counter for unique Typ
+            q = 0  # counter for unique obsid (only used in first Typ-loop)
             self.x = []
-            z_gs=[]
-            self.BarLength=[]#stratigraphy bar length
-            self.Bottom = []#stratigraphy bottom
+            z_gs = []
+            self.BarLength = []  # stratigraphy bar length
+            self.Bottom = []  # stratigraphy bottom
             for obs in self.selected_obsids:
-                if k<=len(self.selected_obsids):#in first Typ-loop, get some basic obs_points data - to be used for plotting obsid, empty bars etc
+                if k <= len(self.selected_obsids):  # in first Typ-loop, get obs_points data - used for plotting obsid
                     self.x_id.append(float(self.LengthAlong[q]))
                     sql = u"SELECT h_toc, h_gs, length FROM obs_points WHERE obsid = '%s'"%obs
                     recs = db_utils.sql_load_fr_db(sql, self.dbconnection)[1]
-                    if utils.isfloat(str(recs[0][1])) and recs[0][1]>-999:
+                    if utils.isfloat(str(recs[0][1])) and recs[0][1] >- 999:
                         self.z_id.append(recs[0][1])
-                    elif utils.isfloat(str(recs[0][0])) and recs[0][0]>-999:
+                    elif utils.isfloat(str(recs[0][0])) and recs[0][0] >- 999:
                         self.z_id.append(recs[0][0])
                     else:
                         self.z_id.append(0)
@@ -555,16 +555,16 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 _recs = db_utils.sql_load_fr_db(sql, self.dbconnection)[1]
                 if _recs:
                     recs = _recs
-                    j=0#counter for unique stratid
-                    for rec in recs:#loop cleanup
-                        self.BarLength.append(rec[0])#loop cleanup
+                    j = 0  # counter for unique stratid
+                    for rec in recs:  # loop cleanup
+                        self.BarLength.append(rec[0])  # loop cleanup
                         self.x.append(float(self.LengthAlong[k]))# - self.barwidth/2)
                         sql01 = u"select h_gs from obs_points where obsid = '%s'"%obs
                         sql01_result = db_utils.sql_load_fr_db(sql01, self.dbconnection)[1][0][0]
                         sql02 = u"select h_toc from obs_points where obsid = '%s'"%obs
                         sql02_result = db_utils.sql_load_fr_db(sql02, self.dbconnection)[1][0][0]
-                        #print('h_gs for ' + obs + ' is ' + str((utils.sql_load_fr_db(sql01)[1])[0][0]))#debug
-                        #print('h_toc for ' + obs + ' is ' + str((utils.sql_load_fr_db(sql02)[1])[0][0]))#debug
+                        # print('h_gs for ' + obs + ' is ' + str((utils.sql_load_fr_db(sql01)[1])[0][0]))#debug
+                        # print('h_toc for ' + obs + ' is ' + str((utils.sql_load_fr_db(sql02)[1])[0][0]))#debug
                         
                         if utils.isfloat(str(sql01_result)) and sql01_result >-999:
                             z_gs.append(float(str(sql01_result)))
@@ -574,15 +574,17 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                             z_gs.append(0)
                         self.Bottom.append(z_gs[i] - float(str((
                                                           db_utils.sql_load_fr_db(u"""SELECT depthbot FROM stratigraphy WHERE obsid = '%s' AND stratid = %s AND lower(geoshort) %s"""%(obs, str(recs[j][1]), self.PlotTypes[Typ]), self.dbconnection)[1])[0][0])))
-                        #lists for plotting annotation 
-                        self.x_txt.append(self.x[i])#+ self.barwidth/2)#x-coord for text
+                        # lists for plotting annotation
+                        self.x_txt.append(self.x[i])  # + self.barwidth/2)#x-coord for text
                         self.z_txt.append(self.Bottom[i] + recs[j][0]/2)#Z-value for text
                         self.geology_txt.append(utils.null_2_empty_string(ru(recs[j][2])))
                         self.geoshort_txt.append(utils.null_2_empty_string(ru(recs[j][3])))
                         self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
                         self.development_txt.append(utils.null_2_empty_string(ru(recs[j][5])))
                         self.comment_txt.append(utils.null_2_empty_string(ru(recs[j][6])))
-                        #print obs + " " + Typ + " " + self.geology_txt[l] + " " + self.geoshort_txt[l] + " " + self.capacity_txt[l] + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
+                        # print obs + " " + Typ + " " + self.geology_txt[l] + " "
+                        # + self.geoshort_txt[l] + " " + self.capacity_txt[l]
+                        # + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
                         self.hydro_explanation_txt = []
                         self.EHTyp = []
                         for capacity_txt in self.capacity_txt:
