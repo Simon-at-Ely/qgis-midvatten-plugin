@@ -602,10 +602,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plotx[Typ] = x
                 self.plotbottom[Typ] = Bottom
                 self.plotbarlength[Typ] = BarLength
-                for capacity_txt in self.capacity_txt:
-                    self.plotx_h[capacity_txt] = x
-                    self.plotbottom_h[capacity_txt] = Bottom
-                    self.plotbarlength_h[capacity_txt] = BarLength
+                for c_txt in self.capacity_txt:
+                    self.plotx_h[c_txt] = x
+                    self.plotbottom_h[c_txt] = Bottom
+                    self.plotbarlength_h[c_txt] = BarLength
 
         for c_txt in self.EHTyp:
             self.ExistingHydroTypes.append(self.hydroColors.get(c_txt, (ru([''])))[0])
