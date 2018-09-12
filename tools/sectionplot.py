@@ -499,6 +499,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.plotx = {}
         self.plotbottom = {}
         self.plotbarlength = {}
+        self.plotx_h = {}
+        self.plotbottom_h = {}
+        self.plotbarlength_h = {}
         l=0 #counter fro unique obs, stratid and typ
         self.x_txt = []#used by self.WriteAnnotation
         self.z_txt = []#used by self.WriteAnnotation
@@ -580,16 +583,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         self.development_txt.append(utils.null_2_empty_string(ru(recs[j][5])))
                         self.comment_txt.append(utils.null_2_empty_string(ru(recs[j][6])))
                         #print obs + " " + Typ + " " + self.geology_txt[l] + " " + self.geoshort_txt[l] + " " + self.capacity_txt[l] + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
-                        self.plotx_h = {}
-                        self.plotbottom_h = {}
-                        self.plotbarlength_h = {}
                         self.hydro_explanation_txt = []
                         self.EHTyp = []
                         for capacity_txt in self.capacity_txt:
-                            if capacity_txt:
-                                self.plotx_h[capacity_txt] = x
-                                self.plotbottom_h[capacity_txt] = Bottom
-                                self.plotbarlength_h[capacity_txt] = BarLength
                             if not capacity_txt in self.EHTyp:
                                 self.EHTyp.append(capacity_txt)
                             if capacity_txt is None or capacity_txt == '':
@@ -606,6 +602,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plotx[Typ] = x
                 self.plotbottom[Typ] = Bottom
                 self.plotbarlength[Typ] = BarLength
+                self.plotx_h[self.capacity_txt] = x
+                self.plotbottom_h[self.capacity_txt] = Bottom
+                self.plotbarlength_h[self.capacity_txt] = BarLength
 
         for c_txt in self.EHTyp:
             self.ExistingHydroTypes.append(self.hydroColors.get(c_txt, (ru([''])))[0])
