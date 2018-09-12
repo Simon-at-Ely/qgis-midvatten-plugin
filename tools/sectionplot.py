@@ -580,9 +580,16 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         self.development_txt.append(utils.null_2_empty_string(ru(recs[j][5])))
                         self.comment_txt.append(utils.null_2_empty_string(ru(recs[j][6])))
                         #print obs + " " + Typ + " " + self.geology_txt[l] + " " + self.geoshort_txt[l] + " " + self.capacity_txt[l] + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
+                        self.plotx_h = {}
+                        self.plotbottom_h = {}
+                        self.plotbarlength_h = {}
                         self.hydro_explanation_txt = []
                         self.EHTyp = []
                         for capacity_txt in self.capacity_txt:
+                            if capacity_txt:
+                                self.plotx_h[capacity_txt] = x
+                                self.plotbottom_h[capacity_txt] = Bottom
+                                self.plotbarlength_h[capacity_txt] = BarLength
                             if not capacity_txt in self.EHTyp:
                                 self.EHTyp.append(capacity_txt)
                             if capacity_txt is None or capacity_txt == '':
@@ -723,7 +730,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             return label + '_' + str(label_occurence + 1)
 
     def plot_geology(self):
-        print(str(self.plotx))
+        # print(str(self.plotx))
         for Typ in self.ExistingPlotTypes:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
