@@ -730,7 +730,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             return label + '_' + str(label_occurence + 1)
 
     def plot_geology(self):
-        # print(str(self.plotx))
+        print(str(self.plotx_h))
         for Typ in self.ExistingPlotTypes:#Adding a plot for each "geoshort" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
@@ -762,12 +762,12 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.Labels.append(Typ)
 
     def plot_hydrology(self):
-        for Typ in self.ExistingHydroTypes:#Adding a plot for each "geoshort" that is identified
+        for capacity_txt in self.EHTyp:#Adding a plot for each "capacity_txt" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
             print(str(_settings))
             try:
-                settings = _settings[Typ]
+                settings = _settings[capacity_txt]
                 print(str(settings))
             except KeyError:
                 try:
@@ -775,9 +775,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 except KeyError:
                     settings = _settings
 
-            for _Typ in self.ExistingHydroTypes:
+            for _capacity_txt in self.EHTyp:
                 try:
-                    del settings[_Typ]
+                    del settings[_capacity_txt]
                 except KeyError:
                     pass
             try:
@@ -786,12 +786,12 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 pass
 
             settings['width'] = settings.get('width', self.barwidth)
-            settings['color'] = settings.get('color_qt', self.hydroColors[Typ])
+            settings['color'] = settings.get('color_qt', self.hydroColors[capacity_txt])
             print(str(settings))
 
-            plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
-            self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
-            self.Labels.append(Typ)
+            plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[capacity_txt]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
+            self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[capacity_txt], bottom=self.plotbottom[capacity_txt], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
+            self.Labels.append(capacity_txt)
 
 
     def plot_obs_lines_data(self):
