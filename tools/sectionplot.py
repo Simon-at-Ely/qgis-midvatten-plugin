@@ -531,6 +531,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             z_gs = []
             BarLength = []  # stratigraphy bar length
             Bottom = []  # stratigraphy bottom
+            Capacity = '0'
             for obs in self.selected_obsids:
                 if k <= len(self.selected_obsids):  # in first Typ-loop, get obs_points data - used for plotting obsid
                     self.x_id.append(float(self.LengthAlong[q]))
@@ -556,6 +557,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 if _recs:
                     recs = _recs
                     j = 0  # counter for unique stratid
+                    Capacity = '0'
                     for rec in recs:  # loop cleanup
                         BarLength.append(rec[0])  # loop cleanup
                         x.append(float(self.LengthAlong[k]))# - self.barwidth/2)
@@ -596,6 +598,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         i +=1
                         j +=1
                         l +=1
+                        Capacity = 'utils.null_2_empty_string(ru(recs[j][4]))'
                     del recs
                 k +=1
             if len(x)>0:
@@ -604,9 +607,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plotbottom[Typ] = Bottom
                 self.plotbarlength[Typ] = BarLength
                 # for c_txt in self.capacity_txt:
-                self.plotx_h[c_txt] = x
-                self.plotbottom_h[c_txt] = Bottom
-                self.plotbarlength_h[c_txt] = BarLength
+                self.plotx_h[Capacity] = x
+                self.plotbottom_h[Capacity] = Bottom
+                self.plotbarlength_h[Capacity] = BarLength
                 print(str(x))
         # Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any
         My_format = [('obsline_x', float), ('obsline_y1', float), ('obsline_y2', float)]
