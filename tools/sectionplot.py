@@ -610,7 +610,8 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plotx_h[Capacity] = x
                 self.plotbottom_h[Capacity] = Bottom
                 self.plotbarlength_h[Capacity] = BarLength
-                print(str(x))
+                print(str(Typ))
+                print(str(Capacity))
         # Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any
         My_format = [('obsline_x', float), ('obsline_y1', float), ('obsline_y2', float)]
         obsline_x=[]
