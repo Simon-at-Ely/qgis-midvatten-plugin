@@ -582,6 +582,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         self.geology_txt.append(utils.null_2_empty_string(ru(recs[j][2])))
                         self.geoshort_txt.append(utils.null_2_empty_string(ru(recs[j][3])))
                         self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
+                        Capacity = utils.null_2_empty_string(ru(recs[j][4]))
                         self.development_txt.append(utils.null_2_empty_string(ru(recs[j][5])))
                         self.comment_txt.append(utils.null_2_empty_string(ru(recs[j][6])))
                         # print obs + " " + Typ + " " + self.geology_txt[l] + " "
@@ -598,7 +599,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         i +=1
                         j +=1
                         l +=1
-                        Capacity = utils.null_2_empty_string(ru(recs[j][4]))
                     del recs
                 k +=1
             if len(x)>0:
