@@ -682,7 +682,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 #   del recs
                 print(str(self.hydroColors[Capacity]))
 
-                sql = u"""SELECT depthbot - depthtop, stratid, capacity FROM stratigraphy WHERE obsid = '%s' AND lower(capacity) %s ORDER BY stratid""" % (
+                sql = u"""SELECT depthbot - depthtop, stratid, capacity FROM stratigraphy WHERE obsid = '%s' AND capacity %s ORDER BY stratid""" % (
                 obs, self.hydroColors[Capacity])
                 _recs = db_utils.sql_load_fr_db(sql, self.dbconnection)[1]
                 if _recs:
