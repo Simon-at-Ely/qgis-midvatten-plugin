@@ -598,7 +598,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         l +=1
                     del recs
                 k +=1
-            if len(self.x)>0:
+            if len(x)>0:
                 self.ExistingPlotTypes.append(Typ)
                 self.plotx[Typ] = self.x
                 self.plotbottom[Typ] = self.Bottom
