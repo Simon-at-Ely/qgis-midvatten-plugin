@@ -583,7 +583,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         self.geoshort_txt.append(utils.null_2_empty_string(ru(recs[j][3])))
                         self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
                         Capacity = utils.null_2_empty_string(ru(recs[j][4]))
-                        if Capacity:
+                        if not Capacity:
                             Capacity = '0'
                         self.development_txt.append(utils.null_2_empty_string(ru(recs[j][5])))
                         self.comment_txt.append(utils.null_2_empty_string(ru(recs[j][6])))
