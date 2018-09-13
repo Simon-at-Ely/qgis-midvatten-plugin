@@ -600,18 +600,18 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 k +=1
             if len(x)>0:
                 self.ExistingPlotTypes.append(Typ)
-                self.plotx[Typ] = self.x
-                self.plotbottom[Typ] = self.Bottom
-                self.plotbarlength[Typ] = self.BarLength
+                self.plotx[Typ] = x
+                self.plotbottom[Typ] = Bottom
+                self.plotbarlength[Typ] = BarLength
                 for c_txt in self.capacity_txt:
                     self.plotx_h[c_txt] = x
                     self.plotbottom_h[c_txt] = Bottom
                     self.plotbarlength_h[c_txt] = BarLength
-        #Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any
+        # Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any
         My_format = [('obsline_x', float), ('obsline_y1', float), ('obsline_y2', float)]
         obsline_x=[]
-        obsline_y1=[]#bedrock
-        obsline_y2=[]#ground surface
+        obsline_y1=[]  # bedrock
+        obsline_y2=[]  # ground surface
         x='length'
         self.y1_column='bedrock'
         self.y2_column='ground'
@@ -620,12 +620,13 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             obsline_id = utils.getselectedobjectnames(self.sectionlinelayer)[0]
             sql = r"""select %s as x, %s as y1, %s as y2 from %s where obsid='%s'"""%(x, self.y1_column,self.y2_column,table,obsline_id)
             conn_OK, recs = db_utils.sql_load_fr_db(sql, self.dbconnection)
-            table = np.array(recs, dtype=My_format)  #NDARRAY
+            table = np.array(recs, dtype=My_format)  # NDARRAY
             self.obs_lines_plot_data=table.view(np.recarray)   # RECARRAY   Makes the two columns inte callable objects, i.e. write self.obs_lines_plot_data.values
-        #print('debug info: ' + str(self.selected_obsids) + str(self.x_id) + str(self.z_id) + str(self.barlengths) + str(self.bottoms))#debug
-        PyQt4.QtGui.QApplication.restoreOverrideCursor()#now this long process is done and the cursor is back as normal
+        # print('debug info: ' + str(self.selected_obsids) + str(self.x_id) + str(self.z_id)
+        # + str(self.barlengths) + str(self.bottoms))#debug
+        PyQt4.QtGui.QApplication.restoreOverrideCursor()  # now this long process is done the cursor is back as normal
 
-    def get_plot_data_2(self):#collecting data depending on a number of selections in left side panel
+    def get_plot_data_2(self):  # collecting data depending on a number of selections in left side panel
         self.obsid_wlid=[]#if no stratigr plot, then obsid will be plotted close to water level instead of toc or gs
         self.x_id_wwl=[]
         self.z_id_wwl=[]
