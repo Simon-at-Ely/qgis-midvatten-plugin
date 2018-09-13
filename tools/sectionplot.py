@@ -527,10 +527,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             i = 0  # counter for unique obs and stratid
             k = 0  # counter for unique Typ
             q = 0  # counter for unique obsid (only used in first Typ-loop)
-            self.x = []
+            x = []
             z_gs = []
-            self.BarLength = []  # stratigraphy bar length
-            self.Bottom = []  # stratigraphy bottom
+            BarLength = []  # stratigraphy bar length
+            Bottom = []  # stratigraphy bottom
             for obs in self.selected_obsids:
                 if k <= len(self.selected_obsids):  # in first Typ-loop, get obs_points data - used for plotting obsid
                     self.x_id.append(float(self.LengthAlong[q]))
@@ -557,8 +557,8 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                     recs = _recs
                     j = 0  # counter for unique stratid
                     for rec in recs:  # loop cleanup
-                        self.BarLength.append(rec[0])  # loop cleanup
-                        self.x.append(float(self.LengthAlong[k]))# - self.barwidth/2)
+                        BarLength.append(rec[0])  # loop cleanup
+                        x.append(float(self.LengthAlong[k]))# - self.barwidth/2)
                         sql01 = u"select h_gs from obs_points where obsid = '%s'"%obs
                         sql01_result = db_utils.sql_load_fr_db(sql01, self.dbconnection)[1][0][0]
                         sql02 = u"select h_toc from obs_points where obsid = '%s'"%obs
@@ -572,11 +572,11 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                             z_gs.append(float(str(sql02_result)))
                         else:
                             z_gs.append(0)
-                        self.Bottom.append(z_gs[i] - float(str((
+                        Bottom.append(z_gs[i] - float(str((
                                                           db_utils.sql_load_fr_db(u"""SELECT depthbot FROM stratigraphy WHERE obsid = '%s' AND stratid = %s AND lower(geoshort) %s"""%(obs, str(recs[j][1]), self.PlotTypes[Typ]), self.dbconnection)[1])[0][0])))
                         # lists for plotting annotation
-                        self.x_txt.append(self.x[i])  # + self.barwidth/2)#x-coord for text
-                        self.z_txt.append(self.Bottom[i] + recs[j][0]/2)#Z-value for text
+                        self.x_txt.append(x[i])  # + self.barwidth/2)#x-coord for text
+                        self.z_txt.append(Bottom[i] + recs[j][0]/2)#Z-value for text
                         self.geology_txt.append(utils.null_2_empty_string(ru(recs[j][2])))
                         self.geoshort_txt.append(utils.null_2_empty_string(ru(recs[j][3])))
                         self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
@@ -586,10 +586,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         # + self.geoshort_txt[l] + " " + self.capacity_txt[l]
                         # + " " + self.development_txt[l] + " " + self.comment_txt[l]#debug
                         self.hydro_explanation_txt = []
-                        self.EHTyp = []
                         for capacity_txt in self.capacity_txt:
                             if not capacity_txt in self.EHTyp:
-                                self.EHTyp.append(capacity_txt)
+                                self.ExistingHydroTypes.append(capacity_txt)
                             if capacity_txt is None or capacity_txt == '':
                                 self.hydro_explanation_txt.append('')
                             else:
@@ -604,11 +603,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plotx[Typ] = self.x
                 self.plotbottom[Typ] = self.Bottom
                 self.plotbarlength[Typ] = self.BarLength
-                print(str(self.x))
-        for c_txt in self.capacity_txt:
-            self.plotx_h[c_txt] = self.x
-            self.plotbottom_h[c_txt] = self.Bottom
-            self.plotbarlength_h[c_txt] = self.BarLength
+                for c_txt in self.capacity_txt:
+                    self.plotx_h[c_txt] = x
+                    self.plotbottom_h[c_txt] = Bottom
+                    self.plotbarlength_h[c_txt] = BarLength
         #Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any
         My_format = [('obsline_x', float), ('obsline_y1', float), ('obsline_y2', float)]
         obsline_x=[]
@@ -762,7 +760,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.Labels.append(Typ)
 
     def plot_hydrology(self):
-        for capacity_txt in self.EHTyp:#Adding a plot for each "capacity_txt" that is identified
+        for capacity_txt in self.ExistingHydroTypes:#Adding a plot for each "capacity_txt" that is identified
             #Try to get one setting per geoshort.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
             print(str(_settings))
@@ -775,7 +773,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 except KeyError:
                     settings = _settings
 
-            for _capacity_txt in self.EHTyp:
+            for _capacity_txt in self.ExistingHydroTypes:
                 try:
                     del settings[_capacity_txt]
                 except KeyError:
