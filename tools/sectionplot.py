@@ -598,7 +598,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         i +=1
                         j +=1
                         l +=1
-                        Capacity = 'utils.null_2_empty_string(ru(recs[j][4]))'
+                        Capacity = '"utils.null_2_empty_string(ru(recs[j][4]))"'
                     del recs
                 k +=1
             if len(x)>0:
