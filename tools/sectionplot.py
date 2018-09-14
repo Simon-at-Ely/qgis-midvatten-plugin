@@ -676,12 +676,11 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             z_gs = []
             BarLength = []  # stratigraphy bar length
             Bottom = []  # stratigraphy bottom
-            print(str(self.hydroColors[Capacity]))
+            print(str(hydro_colors_key))
             for obs in self.selected_obsids:
                 if k <= len(self.selected_obsids):  # in first Typ-loop, get obs_points data - used for plotting obsid
                     q += 1
                 #   del recs
-                print(str(self.hydroColors[Capacity]))
 
                 sql = u"""SELECT depthbot - depthtop, stratid, capacity FROM stratigraphy WHERE obsid = '%s' AND capacity %s ORDER BY stratid""" % (
                 obs, self.hydroColors[Capacity])
