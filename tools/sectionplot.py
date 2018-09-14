@@ -666,8 +666,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         l = 0  # counter fro unique obs, stratid and typ
         self.ExistingHydroTypes = []
         self.hydroColors = defs.hydrocolors()
+        hydro_colors_key = [k for k, v in self.hydroColors.items()]
 
-        for Capacity in self.hydroColors:  # Adding a plot for each "geoshort" that is identified
+        for Capacity in hydro_colors_key:  # Adding a plot for each "capacity" that is identified
             i = 0  # counter for unique obs and stratid
             k = 0  # counter for unique Typ
             q = 0  # counter for unique obsid (only used in first Typ-loop)
