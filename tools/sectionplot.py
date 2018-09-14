@@ -712,7 +712,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         # lists for plotting annotation
                         self.x_txt.append(x[i])  # + self.barwidth/2)#x-coord for text
                         self.z_txt.append(Bottom[i] + recs[j][0] / 2)  # Z-value for text
-                        self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][4])))
+                        self.capacity_txt.append(utils.null_2_empty_string(ru(recs[j][3])))
                         self.hydro_explanation_txt = []
                         for capacity_txt in self.capacity_txt:
                             if capacity_txt is None or capacity_txt == '':
