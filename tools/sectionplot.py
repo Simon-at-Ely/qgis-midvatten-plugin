@@ -669,7 +669,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         hydro_colors_key = [k for k, v in self.hydroColors.items()]
         # print(str(hydro_colors_key))
 
-        for Capacity in self.hydroColors.items():  # Adding a plot for each "capacity" that is identified
+        for Capacity in self.hydroColors.keys():  # Adding a plot for each "capacity" that is identified
             i = 0  # counter for unique obs and stratid
             k = 0  # counter for unique Typ
             q = 0  # counter for unique obsid (only used in first Typ-loop)
@@ -683,7 +683,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 #   del recs
 
                 sql = u"""SELECT depthbot - depthtop, stratid, capacity FROM stratigraphy WHERE obsid = '%s' AND capacity %s ORDER BY stratid""" % (
-                obs, self.hydroColors.items())
+                obs, Capacity)
                 _recs = db_utils.sql_load_fr_db(sql, self.dbconnection)[1]
                 if _recs:
                     recs = _recs
