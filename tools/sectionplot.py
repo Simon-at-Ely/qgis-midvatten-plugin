@@ -683,7 +683,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 #   del recs
 
                 sql = u"""SELECT depthbot - depthtop, stratid, capacity FROM stratigraphy WHERE obsid = '%s' AND capacity %s ORDER BY stratid""" % (
-                obs, self.hydroColors.keys(Capacity))
+                obs, Capacity)
                 _recs = db_utils.sql_load_fr_db(sql, self.dbconnection)[1]
                 if _recs:
                     recs = _recs
@@ -706,8 +706,8 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                             z_gs.append(0)
                         Bottom.append(z_gs[i] - float(str((
                                                               db_utils.sql_load_fr_db(
-                                                                  u"""SELECT depthbot FROM stratigraphy WHERE obsid = '%s' AND stratid = %s AND lower(geoshort) %s""" % (
-                                                                  obs, str(recs[j][1]), self.hydroColors[Capacity]),
+                                                                  u"""SELECT depthbot FROM stratigraphy WHERE obsid = '%s' AND stratid = %s AND capacity %s""" % (
+                                                                  obs, str(recs[j][1]), Capacity),
                                                                   self.dbconnection)[1])[0][0])))
                         # lists for plotting annotation
                         self.x_txt.append(x[i])  # + self.barwidth/2)#x-coord for text
