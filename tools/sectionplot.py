@@ -855,7 +855,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.Labels.append(Typ)
 
     def plot_hydrology(self):
-        print(str(self.plotbottom_h))
         for capacity_txt in self.ExistingHydroTypes:#Adding a plot for each "capacity" that is identified
             #Try to get one setting per capacity.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
@@ -880,7 +879,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 pass
 
             settings['width'] = settings.get('width', self.barwidth)
-            settings['color'] = settings.get('color_qt', self.hydroColors[capacity_txt])
+            settings['color'] = settings.get('color_qt', self.hydroColors[capacity_txt][1])
             print(str(settings))
 
             plotx_hleftbarcorner = [i - self.barwidth/2 for i in self.plotx_h[capacity_txt]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
