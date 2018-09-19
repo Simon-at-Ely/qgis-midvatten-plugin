@@ -708,7 +708,14 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                         else:
                             z_gs.append(0)
                         print(str(recs[j][1]))
-                        Bottom.append(z_gs[i] - float(str((
+                        if Capacity is None or Capacity == '':
+                            Bottom.append(z_gs[i] - float(str((
+                                                                  db_utils.sql_load_fr_db(
+                                                                      u"""SELECT depthbot FROM stratigraphy WHERE obsid = '%s' AND stratid = %s AND capacity is NULL""" % (
+                                                                          obs, str(recs[j][1])),
+                                                                      self.dbconnection)[1])[0][0])))
+                        else:
+                            Bottom.append(z_gs[i] - float(str((
                                                               db_utils.sql_load_fr_db(
                          u"""SELECT depthbot FROM stratigraphy WHERE obsid = '%s' AND stratid = %s AND capacity = '%s'""" % (
                                                                   obs, str(recs[j][1]), Capacity),
