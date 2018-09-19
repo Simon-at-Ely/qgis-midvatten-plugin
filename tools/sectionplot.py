@@ -684,6 +684,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 sql = u"""SELECT depthbot - depthtop, stratid, capacity FROM stratigraphy WHERE obsid = '%s' AND capacity %s ORDER BY stratid""" % (
                 obs, Capacity)
                 _recs = db_utils.sql_load_fr_db(sql, self.dbconnection)[1]
+                print(str(obs))
                 if _recs:
                     recs = _recs
                     j = 0  # counter for unique stratid
@@ -703,6 +704,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                             z_gs.append(float(str(sql02_result)))
                         else:
                             z_gs.append(0)
+                        print(str(recs[j][1]))
                         Bottom.append(z_gs[i] - float(str((
                                                               db_utils.sql_load_fr_db(
                          u"""SELECT depthbot FROM stratigraphy WHERE obsid = '%s' AND stratid = %s AND capacity '%s'""" % (
