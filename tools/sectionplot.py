@@ -856,9 +856,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.Labels.append(Typ)
 
     def plot_hydrology(self):
-        print(str(self.plotx_h))
-        for capacity_txt in self.ExistingHydroTypes:#Adding a plot for each "capacity_txt" that is identified
-            #Try to get one setting per geoshort.
+        print(str(self.ExistingHydroTypes))
+        for capacity_txt in self.ExistingHydroTypes:#Adding a plot for each "capacity" that is identified
+            #Try to get one setting per capacity.
             _settings = copy.deepcopy(self.secplot_templates.loaded_template['geology_Axes_bar'])
             print(str(_settings))
             try:
