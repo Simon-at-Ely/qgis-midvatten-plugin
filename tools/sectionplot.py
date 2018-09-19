@@ -675,6 +675,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             z_gs = []
             BarLength = []  # stratigraphy bar length
             Bottom = []  # stratigraphy bottom
+            if Capacity is None or Capacity == '':
+                Capacity = 'NULL'
+            else:
+                Capacity = Capacity
             print(str(Capacity))
             for obs in self.selected_obsids:
                 if k <= len(self.selected_obsids):  # in first Typ-loop, get obs_points data - used for plotting obsid
