@@ -675,7 +675,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             z_gs = []
             BarLength = []  # stratigraphy bar length
             Bottom = []  # stratigraphy bottom
-            print(str(Capacity))
             for obs in self.selected_obsids:
                 if k <= len(self.selected_obsids):  # in first Typ-loop, get obs_points data - used for plotting obsid
                     q += 1
@@ -687,7 +686,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                     sql = u"""SELECT depthbot - depthtop, stratid, capacity FROM stratigraphy WHERE obsid = '%s' AND capacity = '%s' ORDER BY stratid""" % (
                     obs, Capacity)
                 _recs = db_utils.sql_load_fr_db(sql, self.dbconnection)[1]
-                print(str(obs))
                 if _recs:
                     recs = _recs
                     j = 0  # counter for unique stratid
@@ -707,7 +705,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                             z_gs.append(float(str(sql02_result)))
                         else:
                             z_gs.append(0)
-                        print(str(recs[j][1]))
                         if Capacity is None or Capacity == '':
                             Bottom.append(z_gs[i] - float(str((
                                                                   db_utils.sql_load_fr_db(
@@ -740,6 +737,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                 self.plotx_h[Capacity] = x
                 self.plotbottom_h[Capacity] = Bottom
                 self.plotbarlength_h[Capacity] = BarLength
+                print(str(self.plotx))
         # Last step in get data - check if the line layer is obs_lines and if so, load seismic data if there are any
         My_format = [('obsline_x', float), ('obsline_y1', float), ('obsline_y2', float)]
         obsline_x = []
