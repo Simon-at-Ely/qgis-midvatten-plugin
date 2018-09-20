@@ -753,13 +753,13 @@ class midvatten:
         obs_points_layer = utils.find_layer('obs_points')
         selectedobspoints = utils.getselectedobjectnames(obs_points_layer)
         obsidlist = []
-        if len(selectedobspoints)>1:
+        if len(selectedobspoints) >= 1:
             # We cannot send unicode as string to sql because it would include the u'
             # Made into tuple because module sectionplot depends on obsid being a tuple
             OBSID = ru(selectedobspoints, keep_containers=True)
         else:
-            utils.MessagebarAndLog.warning(bar_msg=ru(QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must select at least two objects in the obs_points layer')))
-            error = False
+            utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten", 'For plot, you must select at least one object in the obs_points layer')))
+            error = True
 
         if not error:
             try:
