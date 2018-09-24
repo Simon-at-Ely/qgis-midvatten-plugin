@@ -737,11 +737,23 @@ class midvatten:
         SectionLineLayer = qgis.utils.iface.mapCanvas().currentLayer()#MUST BE LINE VECTOR LAYER WITH SAME EPSG as MIDV_OBSDB AND THERE MUST BE ONLY ONE SELECTED FEATURE
         msg = None
         nrofselected = SectionLineLayer.selectedFeatureCount()
+        obs_points_layer = utils.find_layer('obs_points')
+        selectedobspoints = utils.getselectedobjectnames(obs_points_layer)
+        obsidlist = []
         if nrofselected == 1:#First verify only one feature is selected in the active layer...
             for feat in SectionLineLayer.getFeatures():
                 geom = feat.geometry()
                 if geom.wkbType() == QGis.WKBLineString:#...and that the active layer is a line vector layer
-                    pass
+                    # Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
+
+                    if len(selectedobspoints) > 1:
+                        # We cannot send unicode as string to sql because it would include the u'
+                        # Made into tuple because module sectionplot depends on obsid being a tuple
+                        OBSID = ru(selectedobspoints, keep_containers=True)
+                    else:
+                        utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
+                                                                                              'For plot, you must select at least one object in the obs_points layer')))
+                        error = True
                 else:
                     utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer that defines the section.'))
                     error = False
@@ -750,9 +762,7 @@ class midvatten:
             error = False
         
         #Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
-        obs_points_layer = utils.find_layer('obs_points')
-        selectedobspoints = utils.getselectedobjectnames(obs_points_layer)
-        obsidlist = []
+
         if len(selectedobspoints) >= 1:
             # We cannot send unicode as string to sql because it would include the u'
             # Made into tuple because module sectionplot depends on obsid being a tuple
