@@ -755,7 +755,7 @@ class midvatten:
                                                                                               'For plot, you must select at least one object in the obs_points layer')))
                         error = True
                 else:
-                    utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'For section plot, you must activate the vector line layer that defines the section.'))
+                    utils.MessagebarAndLog.critical(bar_msg=QCoreApplication.translate("Midvatten", 'For section plot, you must activate the vector line layer that defines the section.'))
                     error = True
         else:
             utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer and select exactly one feature that defines the section'))
