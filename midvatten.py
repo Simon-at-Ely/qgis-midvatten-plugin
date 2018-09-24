@@ -757,19 +757,29 @@ class midvatten:
                 else:
                     utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer that defines the section.'))
                     error = False
+                    # Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
+
+                    if len(selectedobspoints) >= 1:
+                        # We cannot send unicode as string to sql because it would include the u'
+                        # Made into tuple because module sectionplot depends on obsid being a tuple
+                        OBSID = ru(selectedobspoints, keep_containers=True)
+                    else:
+                        utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
+                                                                                              'For plot, you must select at least one object in the obs_points layer')))
+                        error = True
         else:
             utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer and select exactly one feature that defines the section'))
             error = False
-        
-        #Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
+            # Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
 
-        if len(selectedobspoints) >= 1:
-            # We cannot send unicode as string to sql because it would include the u'
-            # Made into tuple because module sectionplot depends on obsid being a tuple
-            OBSID = ru(selectedobspoints, keep_containers=True)
-        else:
-            utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten", 'For plot, you must select at least one object in the obs_points layer')))
-            error = True
+            if len(selectedobspoints) >= 1:
+                # We cannot send unicode as string to sql because it would include the u'
+                # Made into tuple because module sectionplot depends on obsid being a tuple
+                OBSID = ru(selectedobspoints, keep_containers=True)
+            else:
+                utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
+                                                                                      'For plot, you must select at least one object in the obs_points layer')))
+                error = True
 
         if not error:
             try:
