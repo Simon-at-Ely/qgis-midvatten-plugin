@@ -740,7 +740,8 @@ class midvatten:
         obs_points_layer = utils.find_layer('obs_points')
         selectedobspoints = utils.getselectedobjectnames(obs_points_layer)
         obsidlist = []
-        if SectionLineLayer == None:
+        print(str(SectionLineLayer))
+        if SectionLineLayer == 0:
             utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
                                                                                   'For plot, you must select at least one object in the obs_points layer')))
             error = True
