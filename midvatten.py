@@ -736,7 +736,7 @@ class midvatten:
 
         SectionLineLayer = qgis.utils.iface.mapCanvas().currentLayer()#MUST BE LINE VECTOR LAYER WITH SAME EPSG as MIDV_OBSDB AND THERE MUST BE ONLY ONE SELECTED FEATURE
         msg = None
-        nrofselected = SectionLineLayer.selectedFeatureCount()
+
         obs_points_layer = utils.find_layer('obs_points')
         selectedobspoints = utils.getselectedobjectnames(obs_points_layer)
         obsidlist = []
@@ -746,6 +746,7 @@ class midvatten:
                                                                                   'For plot, you must select at least one object in the obs_points layer')))
             error = True
         else:
+            nrofselected = SectionLineLayer.selectedFeatureCount()
             if nrofselected == 1:#First verify only one feature is selected in the active layer...
                 for feat in SectionLineLayer.getFeatures():
                     geom = feat.geometry()
