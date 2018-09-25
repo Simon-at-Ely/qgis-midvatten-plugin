@@ -746,7 +746,7 @@ class midvatten:
             error = True
         else:
             nrofselected = SectionLineLayer.selectedFeatureCount()
-            layer_test = SectionLineLayer.attributeDisplayName(5)
+            layer_test = SectionLineLayer.attributeDisplayName(4)
             print(str(layer_test))
             if nrofselected == 1 and layer_test is 'source':
                 # First verify only one feature is selected in the active layer...
