@@ -740,15 +740,16 @@ class midvatten:
         obs_points_layer = utils.find_layer('obs_points')
         selectedobspoints = utils.getselectedobjectnames(obs_points_layer)
         obsidlist = []
-        for item in SectionLineLayer:
-            print(str(item))
+        print(str(item))
         if not SectionLineLayer:
             utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
                                                                                   'For plot, you must select at least one object in the obs_points layer')))
             error = True
         else:
             nrofselected = SectionLineLayer.selectedFeatureCount()
-            if nrofselected == 1 and SectionLineLayer is not 'obs_points':
+            SectionLineLayer_str = str(SectionLineLayer)
+            print(str(SectionLineLayer_str))
+            if nrofselected == 1 and SectionLineLayer_str is not 'obs_points':
                 # First verify only one feature is selected in the active layer...
                 for feat in SectionLineLayer.getFeatures():
                     geom = feat.geometry()
