@@ -747,10 +747,11 @@ class midvatten:
             error = True
         else:
             nrofselected = SectionLineLayer.selectedFeatureCount()
-            if nrofselected == 1:#First verify only one feature is selected in the active layer...
+            if nrofselected == 1 and SectionLineLayer is not 'obs_points':
+                # First verify only one feature is selected in the active layer...
                 for feat in SectionLineLayer.getFeatures():
                     geom = feat.geometry()
-                    if geom.wkbType() == QGis.WKBLineString:#...and that the active layer is a line vector layer
+                    if geom.wkbType() == QGis.WKBLineString:  # ...and that the active layer is a line vector layer
                         # Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
 
                         if len(selectedobspoints) > 1:
