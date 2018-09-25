@@ -772,6 +772,7 @@ class midvatten:
                 # Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
 
                 if len(selectedobspoints) >= 1:
+                    print(str('else'))
                     # We cannot send unicode as string to sql because it would include the u'
                     # Made into tuple because module sectionplot depends on obsid being a tuple
                     OBSID = ru(selectedobspoints, keep_containers=True)
