@@ -746,7 +746,7 @@ class midvatten:
             error = True
         else:
             nrofselected = SectionLineLayer.selectedFeatureCount()
-            print(str(dir(SectionLineLayer)))
+            print(str(SectionLineLayer.attributeDisplayName()))
             if nrofselected == 1 and SectionLineLayer is not 'obs_points':
                 # First verify only one feature is selected in the active layer...
                 for feat in SectionLineLayer.getFeatures():
