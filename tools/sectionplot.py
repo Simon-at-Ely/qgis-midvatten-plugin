@@ -196,7 +196,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             if len(self.selected_obsids) > 1:
                 xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
             else:
-                xmax, xmin = (float(max(self.LengthAlong))+1), float(min(self.LengthAlong))
+                xmax, xmin = (float(max(self.LengthAlong))+0.1), float(min(self.LengthAlong))
             self.barwidth = (self.ms.settingsdict['secplotbw']/100.0)*(xmax -xmin)
 
             self.get_plot_data_2()
