@@ -130,6 +130,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.selected_obsids = OBSIDtuplein
             self.LengthAlong = range(0, 10 * len(self.selected_obsids), 10)
             self.sectionlinelayerflag = 0
+            print(str(self.LengthAlong))
 
         
         PyQt4.QtGui.QApplication.restoreOverrideCursor() #now this long process is done and the cursor is back as normal

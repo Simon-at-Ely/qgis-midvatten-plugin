@@ -771,7 +771,8 @@ class midvatten:
             else:
                 utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer and select exactly one feature that defines the section'))
                 error = False
-                # Then verify that at least two feature is selected in obs_points layer, and get a list (OBSID) of selected obs_points
+                # Then verify that at least two feature is selected in obs_points layer,
+                # and get a list (OBSID) of selected obs_points
 
                 if len(selectedobspoints) >= 1:
                     print(str('else'))
