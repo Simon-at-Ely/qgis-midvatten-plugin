@@ -109,10 +109,12 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             if not ok:
                 return None
 
-            #print(str(self.dbconnection.cursor().execute('select * from %s'%self.temptable_name).fetchall()))
+            # print(str(self.dbconnection.cursor().execute('select * from %s'%self.temptable_name).fetchall()))
             # get sorted obsid and distance along section from sqlite db
             nF = len(OBSIDtuplein)#number of Features
-            LengthAlongTable = self.get_length_along(OBSIDtuplein)#get_length_along returns a numpy view, values are returned by LengthAlongTable.obs_id or LengthAlongTable.length
+            LengthAlongTable = self.get_length_along(OBSIDtuplein)
+            # get_length_along returns a numpy view, values are returned by
+            # LengthAlongTable.obs_id or LengthAlongTable.length
             self.selected_obsids = LengthAlongTable.obs_id
             self.LengthAlong = LengthAlongTable.length
 
@@ -132,10 +134,9 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.sectionlinelayerflag = 0
             print(str(self.LengthAlong))
 
+        PyQt4.QtGui.QApplication.restoreOverrideCursor() # now this long process is done the cursor is back as normal
         
-        PyQt4.QtGui.QApplication.restoreOverrideCursor() #now this long process is done and the cursor is back as normal
-        
-        #get PlotData
+        # get PlotData
         self.get_plot_data()
         self.get_plot_data_3()
 
