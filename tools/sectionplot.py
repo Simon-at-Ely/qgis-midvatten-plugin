@@ -867,7 +867,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                                                                         align ='edge',  **settings))
             self.Labels.append(Typ)
             print(str(plotxleftbarcorner))
-            print(str(self.plotx))
+            print(str(settings))
 
     def plot_hydrology(self):
         for capacity_txt in self.ExistingHydroTypes:#Adding a plot for each "capacity" that is identified
