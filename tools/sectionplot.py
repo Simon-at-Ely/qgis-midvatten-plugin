@@ -198,7 +198,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             else:
                 xmax, xmin = (float(max(self.LengthAlong))+0.1), float(min(self.LengthAlong))
             print(float(xmin))
-            print(float(xmin))
+            print(float(xmax))
             self.barwidth = (self.ms.settingsdict['secplotbw']/100.0)*(xmax -xmin)
             print(float(self.barwidth))
 
