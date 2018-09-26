@@ -193,7 +193,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.get_dem_selection()
             self.ms.settingsdict['secplotselectedDEMs'] = self.rasterselection
             #fix Floating Bar Width in percents of xmax - xmin
-            xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
+            if len(self.selected_obsids) > 1:
+                xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
+            else:
+                xmax, xmin = 10, 0
             self.barwidth = (self.ms.settingsdict['secplotbw']/100.0)*(xmax -xmin)
 
             self.get_plot_data_2()
