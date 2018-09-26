@@ -99,7 +99,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.sectionlinelayer = SectionLineLayer       
         self.obsids_w_wl = []
 
-        if self.sectionlinelayer.selectedFeatureCount() == 1: # Test that layer and feature have been selected
+        if self.sectionlinelayer.selectedFeatureCount() == 1 and self.sectionlinelayer.attributeDisplayName(4) == 'source':  # Test that layer and feature have been selected
         
             #upload vector line layer as temporary table in sqlite db
             self.line_crs = self.sectionlinelayer.crs()
