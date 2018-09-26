@@ -196,7 +196,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             if len(self.selected_obsids) > 1:
                 xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
             else:
-                xmax, xmin = (float(max(self.LengthAlong))+0.1), float(min(self.LengthAlong))
+                xmax, xmin = 10, 0
             print(float(xmin))
             print(float(xmax))
             self.barwidth = (self.ms.settingsdict['secplotbw']/100.0)*(xmax -xmin)
@@ -862,6 +862,8 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
             self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
             self.Labels.append(Typ)
+            print(str(plotxleftbarcorner))
+            print(str(self.plotx))
 
     def plot_hydrology(self):
         for capacity_txt in self.ExistingHydroTypes:#Adding a plot for each "capacity" that is identified
