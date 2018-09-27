@@ -130,7 +130,10 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
 
         else:
             self.selected_obsids = OBSIDtuplein
-            self.LengthAlong = range(0, 10 * len(self.selected_obsids), 10)
+            if len(self.selected_obsids) > 1:
+                self.LengthAlong = range(0, 10 * len(self.selected_obsids), 10)
+            else:
+                self.LengthAlong = [0, 10]
             self.sectionlinelayerflag = 0
             print(str(self.LengthAlong))
 
@@ -407,8 +410,8 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             for t in leg.get_texts():
                 t.set_fontsize(self.secplot_templates.loaded_template['legend_Text_set_fontsize'])
 
-        if self.sectionlinelayerflag == 0: # Test produces simple plot if flag = 0
-            self.secax.set_xticks(self.LengthAlong) # Places ticks where plots are
+        if self.sectionlinelayerflag == 0:  # Test produces simple plot if flag = 0
+            self.secax.set_xticks(self.LengthAlong)  # Places ticks where plots are
             for label in self.secax.set_xticklabels(self.selected_obsids): # Sets tick labels as obsids
                 label.set_fontsize(**self.secplot_templates.loaded_template['ticklabels_Text_set_fontsize'])
             Axes_set_xlabel = dict(
