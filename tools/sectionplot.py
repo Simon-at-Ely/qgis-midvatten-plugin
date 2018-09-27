@@ -135,7 +135,6 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             else:
                 self.LengthAlong = [0, 10]
             self.sectionlinelayerflag = 0
-            print(str(self.LengthAlong))
 
         PyQt4.QtGui.QApplication.restoreOverrideCursor() # now this long process is done the cursor is back as normal
         
@@ -196,14 +195,8 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             self.get_dem_selection()
             self.ms.settingsdict['secplotselectedDEMs'] = self.rasterselection
             #fix Floating Bar Width in percents of xmax - xmin
-            if len(self.selected_obsids) > 1:
-                xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
-            else:
-                xmax, xmin = 10, 0
-            print(float(xmin))
-            print(float(xmax))
+            xmax, xmin =float(max(self.LengthAlong)), float(min(self.LengthAlong))
             self.barwidth = (self.ms.settingsdict['secplotbw']/100.0)*(xmax -xmin)
-            print(float(self.barwidth))
 
             self.get_plot_data_2()
 
@@ -863,11 +856,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
             # print(str(settings))
 
             plotxleftbarcorner = [i - self.barwidth/2 for i in self.plotx[Typ]]#subtract half bar width from x position (x position is stored as bar center in self.plotx)
-            if len(self.selected_obsids) > 1:
-                self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
-            else:
-                self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ],
-                                                                        align ='edge',  **settings))
+            self.p.append(self.secax.bar(plotxleftbarcorner, self.plotbarlength[Typ], bottom=self.plotbottom[Typ], **settings))#matplotlib.pyplot.bar(left, height, width=0.8, bottom=None, hold=None, **kwargs)
             self.Labels.append(Typ)
             print(str(plotxleftbarcorner))
             print(str(settings))
