@@ -742,7 +742,7 @@ class midvatten:
         obsidlist = []
         nrofselected = SectionLineLayer.selectedFeatureCount()
         layer_test = SectionLineLayer.name()
-        if nrofselected == 1 and layer_test != 'obs_points':
+        if nrofselected == 1 and layer_test != 'obs_points'and layer_test != 'obs_p_w_strat':
             if not SectionLineLayer:
                 utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
                                                                                       'For plot, you must select at least one object in the obs_points layer')))
@@ -775,7 +775,7 @@ class midvatten:
             # and get a list (OBSID) of selected obs_points
             selectedobspoints = utils.getselectedobjectnames()  # Finding obsid from currently selected layer.
             if not selectedobspoints:
-                obs_points_layer = utils.find_layer('obs_points')
+               obs_points_layer = utils.find_layer('obs_points')
 
             if len(selectedobspoints) >= 1:
 
