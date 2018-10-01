@@ -740,14 +740,14 @@ class midvatten:
         obs_points_layer = utils.find_layer('obs_points')
         selectedobspoints = utils.getselectedobjectnames(obs_points_layer)
         obsidlist = []
-        if not SectionLineLayer:
-            utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
-                                                                                  'For plot, you must select at least one object in the obs_points layer')))
-            error = True
-        else:
-            nrofselected = SectionLineLayer.selectedFeatureCount()
-            layer_test = SectionLineLayer.name()
-            if nrofselected == 1 and layer_test != 'obs_points':
+        nrofselected = SectionLineLayer.selectedFeatureCount()
+        layer_test = SectionLineLayer.name()
+        if nrofselected == 1 and layer_test != 'obs_points':
+            if not SectionLineLayer:
+                utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
+                                                                                      'For plot, you must select at least one object in the obs_points layer')))
+                error = True
+            else:
                 # First verify only one feature is selected in the active layer...
                 for feat in SectionLineLayer.getFeatures():
                     geom = feat.geometry()
@@ -768,23 +768,23 @@ class midvatten:
                     utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
                                                                                                   'For sectionplot, you must select at least two objects in the obs_points layer')))
                     error = True
-            else:
-                utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer and select exactly one feature that defines the section'))
-                error = False
-                # Then verify that at least two feature is selected in obs_points layer,
-                # and get a list (OBSID) of selected obs_points
+        else:
+            utils.MessagebarAndLog.warning(bar_msg=QCoreApplication.translate("Midvatten", 'Reverting to simple stratigraphy plot. For section plot, you must activate the vector line layer and select exactly one feature that defines the section'))
+            error = False
+            # Then verify that at least two feature is selected in obs_points layer,
+            # and get a list (OBSID) of selected obs_points
 
-                if len(selectedobspoints) >= 1:
-                    selectedobspoints = utils.getselectedobjectnames() # Finding obsid from currently selected layer.
-                    if not selectedobspoints:
-                        obs_points_layer = utils.find_layer('obs_points')
-                    # We cannot send unicode as string to sql because it would include the u'
-                    # Made into tuple because module sectionplot depends on obsid being a tuple
-                    OBSID = ru(selectedobspoints, keep_containers=True)
-                else:
-                    utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
+            if len(selectedobspoints) >= 1:
+                selectedobspoints = utils.getselectedobjectnames() # Finding obsid from currently selected layer.
+                if not selectedobspoints:
+                    obs_points_layer = utils.find_layer('obs_points')
+                # We cannot send unicode as string to sql because it would include the u'
+                # Made into tuple because module sectionplot depends on obsid being a tuple
+                OBSID = ru(selectedobspoints, keep_containers=True)
+            else:
+                utils.MessagebarAndLog.critical(bar_msg=ru(QCoreApplication.translate("Midvatten",
                                                                                       'For plot, you must select at least one object in the obs_points layer')))
-                    error = True
+                error = True
 
         if not error:
             try:
