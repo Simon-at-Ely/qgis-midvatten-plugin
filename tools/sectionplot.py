@@ -99,19 +99,21 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
         self.sectionlinelayer = SectionLineLayer       
         self.obsids_w_wl = []
 
-        if self.sectionlinelayer.selectedFeatureCount() == 1 and self.sectionlinelayer.name() != 'obs_points':
+        if self.sectionlinelayer.selectedFeatureCount() == 1 and self.sectionlinelayer.name() != 'obs_points' \
+                and self.sectionlinelayer.name() != 'obs_p_w_strat':
             # Test that layer and feature have been selected
         
-            #upload vector line layer as temporary table in sqlite db
+            # upload vector line layer as temporary table in sqlite db
             self.line_crs = self.sectionlinelayer.crs()
-            #print(str(self.dbconnection.cursor().execute('select * from a.sqlite_master').fetchall()))
-            ok = self.upload_qgis_vector_layer(self.sectionlinelayer, self.line_crs.postgisSrid(), True, False)#loads qgis polyline layer into sqlite table
+            # print(str(self.dbconnection.cursor().execute('select * from a.sqlite_master').fetchall()))
+            ok = self.upload_qgis_vector_layer(self.sectionlinelayer, self.line_crs.postgisSrid(), True, False)
+            # loads qgis polyline layer into sqlite table
             if not ok:
                 return None
 
             # print(str(self.dbconnection.cursor().execute('select * from %s'%self.temptable_name).fetchall()))
             # get sorted obsid and distance along section from sqlite db
-            nF = len(OBSIDtuplein)#number of Features
+            nF = len(OBSIDtuplein)  # number of Features
             LengthAlongTable = self.get_length_along(OBSIDtuplein)
             # get_length_along returns a numpy view, values are returned by
             # LengthAlongTable.obs_id or LengthAlongTable.length
