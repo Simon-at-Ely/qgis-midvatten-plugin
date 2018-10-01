@@ -151,7 +151,7 @@ class SectionPlot(PyQt4.QtGui.QDockWidget, Ui_SecPlotDock):#the Ui_SecPlotDock  
                                                defs.secplot_default_template(), self.ms)
 
         if self.sectionlinelayerflag == 0:
-            self.dedicatedSecPlot.setHidden()
+            self.dedicatedSecPlot.setHidden(True)
 
 
 
