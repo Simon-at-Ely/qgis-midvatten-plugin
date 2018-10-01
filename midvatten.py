@@ -775,6 +775,9 @@ class midvatten:
                 # and get a list (OBSID) of selected obs_points
 
                 if len(selectedobspoints) >= 1:
+                    selectedobspoints = utils.getselectedobjectnames() # Finding obsid from currently selected layer.
+                    if not selectedobspoints:
+                        obs_points_layer = utils.find_layer('obs_points')
                     # We cannot send unicode as string to sql because it would include the u'
                     # Made into tuple because module sectionplot depends on obsid being a tuple
                     OBSID = ru(selectedobspoints, keep_containers=True)
